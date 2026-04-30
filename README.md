@@ -7,3 +7,6 @@ Native data contract: Supabase is the only record source of truth. No public `de
 Intentional UI change: Sign out is nested under the account icon with Settings.
 
 Added: Group by Shelf ID.
+
+## v6 Record Cabinet layer
+Record Cabinet is preserved as an internal base layer (`record-cabinet`) for every record, but filtered out of visible collection chips, selectors, and collection management.

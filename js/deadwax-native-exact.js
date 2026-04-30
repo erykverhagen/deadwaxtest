@@ -28,6 +28,24 @@
   function esc(v){ return String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
   function arr(v){ return Array.isArray(v) ? v : (typeof v === 'string' && v.trim().startsWith('[') ? JSON.parse(v) : []); }
   function norm(s){ return String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,' ').trim(); }
+  const RECORD_CABINET_ID = 'record-cabinet';
+  function isRecordCabinet(v){ const n=norm(typeof v==='string'?v:(v?.name||v?.id||'')); return n==='record cabinet' || n==='record-cabinet' || n==='recordcabinet'; }
+  function visibleCollections(cols){ return arr(cols).filter(c => !isRecordCabinet(c)); }
+  function visibleCollectionRows(cols){ return arr(cols).filter(c => !isRecordCabinet(c)); }
+  function internalCollections(cols){
+    const out=[];
+    for(const c of arr(cols)){
+      const v = typeof c === 'string' ? c : (c?.id || c?.name || '');
+      if(!v) continue;
+      if(isRecordCabinet(v)){
+        if(!out.includes(RECORD_CABINET_ID)) out.push(RECORD_CABINET_ID);
+      }else if(!out.includes(v)){
+        out.push(v);
+      }
+    }
+    if(!out.includes(RECORD_CABINET_ID)) out.unshift(RECORD_CABINET_ID);
+    return out;
+  }
   function shelfParts(id){ const m=String(id||'').match(/^([A-Za-z]+)\s*0*([0-9]+)(.*)$/); return m ? [m[1].toUpperCase(), parseInt(m[2],10), m[3]||''] : [String(id||'~'), 999999, '']; }
   function shelfCompare(a,b){ const A=shelfParts(a?.shelf_id||a?.code), B=shelfParts(b?.shelf_id||b?.code); return A[0].localeCompare(B[0]) || A[1]-B[1] || A[2].localeCompare(B[2]); }
   function alphaKey(r){ return (r.last || r.artist || '#').trim().charAt(0).toUpperCase().replace(/[^A-Z0-9]/,'#'); }
@@ -38,7 +56,7 @@
   function recordCode(r){ return r.shelf_id || r.code || ''; }
   function coverUrl(r){ return r.cover_url || r.coverUrl || r.img || ''; }
   function collectionNames(r){
-    const raw = arr(r.collections);
+    const raw = visibleCollections(r.collections);
     return raw.map(x => {
       if(typeof x === 'string'){
         const hit = state.collections.find(c => c.id === x || c.name === x);
@@ -114,7 +132,7 @@
     ]);
     if(recRes.error){ alert(recRes.error.message); return; }
     if(colRes.error){ console.warn(colRes.error); }
-    state.collections = colRes.data || [];
+    state.collections = visibleCollectionRows(colRes.data || []);
     state.records = (recRes.data || []).map(normalizeRecord);
     applyFilters();
     setSync('Synced');
@@ -130,7 +148,7 @@
     r.genres = arr(r.genres);
     r.styles = arr(r.styles);
     r.tracklist = arr(r.tracklist);
-    r.collections = arr(r.collections);
+    r.collections = internalCollections(r.collections);
     r.release_year = r.release_year || r.year || null;
     if(!r.reaction && r.rating) r.reaction = reactionValue(r);
     return r;
@@ -399,7 +417,7 @@
 
   function renderModalCollections(r){
     const names=collectionNames(r);
-    $('#mCollectionBox').innerHTML=`<div class="m-collection-head">Collections</div><div class="m-collection-row">${names.map(n=>`<span class="m-collection-chip">${esc(n)}</span>`).join('') || '<span class="m-collection-chip">Record Cabinet</span>'}</div>`;
+    $('#mCollectionBox').innerHTML=`<div class="m-collection-head">Collections</div><div class="m-collection-row">${names.map(n=>`<span class="m-collection-chip">${esc(n)}</span>`).join('') || '<span class="collection-hint">No extra collection labels</span>'}</div>`;
   }
 
   function renderRelated(r){
@@ -418,6 +436,7 @@
   window.closeModal=closeModal;
 
   async function saveRecord(r,patch,action='record_update', reopen=true){
+    if(patch && Object.prototype.hasOwnProperty.call(patch,'collections')) patch.collections = internalCollections(patch.collections);
     if(!r) return;
     setSync('Saving');
     const payload={...patch, updated_at:new Date().toISOString()};
@@ -535,7 +554,7 @@
       cover_url:$('#fldImg').value.trim(),
       note:$('#fldNote').value.trim(),
       tracklist:parseTrackEditor(),
-      collections:[...$('#fldCollections').selectedOptions].map(o=>o.value),
+      collections:internalCollections([...document.querySelector('#fldCollections').selectedOptions].map(o=>o.value)),
       user_id:state.user.id,
       updated_at:new Date().toISOString()
     };
@@ -620,11 +639,13 @@
 
   function renderCollectionManager(){
     const list=$('#collectionList'); if(!list) return;
-    list.innerHTML=state.collections.map(c=>`<div class="collection-item"><div><div class="collection-name">${esc(c.name)}</div><div class="collection-meta">${esc(c.id)}</div></div><button class="btn-sec dng" onclick="deleteCollection('${esc(c.id)}')">Remove</button></div>`).join('') || '<div class="tip">No collection labels yet.</div>';
+    const rows=visibleCollectionRows(state.collections);
+    list.innerHTML=rows.map(c=>`<div class="collection-item"><div><div class="collection-name">${esc(c.name)}</div><div class="collection-meta">${esc(c.id)}</div></div><button class="btn-sec dng" onclick="deleteCollection('${esc(c.id)}')">Remove</button></div>`).join('') || '<div class="tip">No collection labels yet.</div>';
   }
 
   async function addCollection(){
     const name=$('#newCollectionName').value.trim(); if(!name) return;
+    if(isRecordCabinet(name)){ alert('Record Cabinet is the implicit base collection and is not shown as a label.'); return; }
     const id=name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
     const {error}=await SB.from('collections').upsert({id,name,user_id:state.user.id,locked:false},{onConflict:'user_id,id'});
     if(error){ alert(error.message); return; }
@@ -632,6 +653,7 @@
   }
   window.addCollection=addCollection;
   async function deleteCollection(id){
+    if(isRecordCabinet(id)){ alert('Record Cabinet is implicit and cannot be removed as a visible label.'); return; }
     if(!confirm('Remove this collection label?')) return;
     const {error}=await SB.from('collections').delete().eq('user_id',state.user.id).eq('id',id);
     if(error){ alert(error.message); return; }
