@@ -1,12 +1,11 @@
-# Dead Wax Supabase Native Exact Static Interface v3
+# Dead Wax Supabase Native Exact Interface v8
 
-Pixel contract: latest uploaded static `index.html`.
+Supabase-native Dead Wax app using the latest static interface as the visual contract.
 
-Native data contract: Supabase is the only record source of truth. No public `dead_wax_db.js`, no runtime importer.
+Changes in v8:
+- Shelf ID is now the first option in the group selector and remains the default group.
+- The sign-in/sign-up page has been rebuilt as a full turntable scene: the Dead Wax logo is the vinyl label on the record, and the tonearm moves between sign-in and sign-up actions.
+- No `dead_wax_db.js` runtime dependency.
+- No public importer/tools in this package.
 
-Intentional UI change: Sign out is nested under the account icon with Settings.
-
-Added: Group by Shelf ID.
-
-## v6 Record Cabinet layer
-Record Cabinet is preserved as an internal base layer (`record-cabinet`) for every record, but filtered out of visible collection chips, selectors, and collection management.
+Deploy as a fresh GitHub Pages root. Keep Supabase RLS enabled.
