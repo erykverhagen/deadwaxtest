@@ -52,7 +52,15 @@
   function alphaKey(r){ return (r.last || r.artist || '#').trim().charAt(0).toUpperCase().replace(/[^A-Z0-9]/,'#'); }
   function artistSort(a,b){ return norm(a.last||a.artist).localeCompare(norm(b.last||b.artist)) || norm(a.first).localeCompare(norm(b.first)) || norm(a.album).localeCompare(norm(b.album)) || shelfCompare(a,b); }
   function displayYear(r){ return r.release_year || r.year || ''; }
-  function tracks(r){ return arr(r.tracklist); }
+  function extractTracklist(r){
+    const candidates = [r?.tracklist,r?.discogsTracklist,r?.raw_data?.tracklist,r?.raw_data?.discogs?.tracklist,r?.raw_data?.entry?.tracklist,r?.raw_data?.metadata?.tracklist,r?.raw_data?.source?.tracklist,r?.raw_data?.original?.tracklist,r?.raw_data?.code_entry?.tracklist,r?.raw_data?.record?.tracklist];
+    for(const c of candidates){
+      const t=arr(c).filter(x => x && (x.title || x.name || x.position || typeof x === 'string'));
+      if(t.length) return t.map((x,i)=> typeof x === 'string' ? {position:String(i+1), title:x, duration:''} : {position:x.position||x.pos||'', title:x.title||x.name||'', duration:x.duration||''});
+    }
+    return [];
+  }
+  function tracks(r){ return extractTracklist(r); }
   function reactionValue(r){ if(r.reaction) return r.reaction; if(Number(r.rating)===3) return 'favorite'; if(Number(r.rating)===2 || r.liked) return 'liked'; if(Number(r.rating)===1) return 'disliked'; return ''; }
   function recordCode(r){ return r.shelf_id || r.code || ''; }
   function coverUrl(r){ return r.cover_url || r.coverUrl || r.img || ''; }
@@ -176,7 +184,7 @@
     r.owned = r.copies_owned;
     r.genres = arr(r.genres);
     r.styles = arr(r.styles);
-    r.tracklist = arr(r.tracklist);
+    r.tracklist = extractTracklist(r);
     r.collections = internalCollections(r.collections);
     r.release_year = r.release_year || r.year || null;
     if(!r.reaction && r.rating) r.reaction = reactionValue(r);
@@ -411,6 +419,9 @@
     sel.innerHTML='<option value="">All Genres</option>'+genres.map(g=>`<option ${g===cur?'selected':''}>${esc(g)}</option>`).join('');
   }
 
+  function lockPage(){ document.body.classList.add('dw-modal-open'); }
+  function unlockPage(){ if(!document.querySelector('.ov.on,.f-ov.on,.s-ov.on')) document.body.classList.remove('dw-modal-open'); }
+
   function openModal(idx){
     const r=state.filtered[idx]; if(!r) return;
     state.currentId=r.id; state.random=false;
@@ -445,7 +456,7 @@
     $('#mTl').style.display=modalTracks.length ? 'block' : 'none';
     $('#mTlC').innerHTML=trackHtml(r).replaceAll('tl-','m-tl-');
     renderRelated(r);
-    $('#detOv').classList.add('on'); $('#detOv').setAttribute('aria-hidden','false'); $('#detModal').focus();
+    $('#detOv').classList.add('on'); $('#detOv').setAttribute('aria-hidden','false'); lockPage(); $('#detModal').focus();
   }
   window.openModal=openModal;
 
@@ -456,8 +467,15 @@
   }
 
   function renderModalCollections(r){
-    const names=collectionNames(r);
-    $('#mCollectionBox').innerHTML=`<div class="m-collection-head">Collections</div><div class="m-collection-row">${names.map(n=>`<span class="m-collection-chip">${esc(n)}</span>`).join('') || '<span class="collection-hint">No extra collection labels</span>'}</div>`;
+    const selected = new Set(collectionIdsForRecord(r));
+    const names = collectionNames(r);
+    const available = visibleCollectionRows(state.collections).filter(c => !selected.has(c.id));
+    const chips = names.map(n=>{
+      const c = state.collections.find(x=>x.name===n || x.id===n);
+      const id = c?.id || n;
+      return `<span class="m-collection-chip">${esc(n)} <button type="button" class="m-collection-chip-remove" title="Remove ${esc(n)}" onclick="removeCollectionFromCurrent('${esc(id)}')">×</button></span>`;
+    }).join('') || '<span class="collection-hint">No extra collection labels</span>';
+    $('#mCollectionBox').innerHTML=`<div class="m-collection-head">Collections</div><div class="m-collection-row">${chips}<button type="button" class="m-collection-add-btn" onclick="toggleModalCollectionPicker()" title="Add collection label">+</button></div><div class="m-collection-picker" id="modalCollectionPicker" hidden><div class="m-collection-picker-title">Add collection label</div>${available.length?available.map(c=>`<button type="button" class="m-collection-option" onclick="addCollectionToCurrent('${esc(c.id)}')"><span class="m-collection-option-check">+</span><span>${esc(c.name)}</span><small>Add</small></button>`).join(''):'<div class="collection-hint" style="padding:.5rem">All labels already assigned.</div>'}<button type="button" class="m-collection-option" onclick="createCollectionForCurrent()"><span class="m-collection-option-check">+</span><span>New label…</span><small>Create</small></button></div>`;
   }
 
   function renderRelated(r){
@@ -472,7 +490,7 @@
   function openRecordById(id){ const i=state.filtered.findIndex(r=>r.id===id); if(i>=0) openModal(i); }
   window.openRecordById=openRecordById;
 
-  function closeModal(){ $('#detOv').classList.remove('on'); $('#detOv').setAttribute('aria-hidden','true'); state.currentId=null; }
+  function closeModal(){ $('#detOv').classList.remove('on'); $('#detOv').setAttribute('aria-hidden','true'); state.currentId=null; unlockPage(); }
   window.closeModal=closeModal;
 
   async function saveRecord(r,patch,action='record_update', reopen=true){
@@ -509,6 +527,32 @@
       if(ins.error) throw ins.error;
     }
   }
+
+  function toggleModalCollectionPicker(){ const p=$('#modalCollectionPicker'); if(p) p.hidden=!p.hidden; }
+  window.toggleModalCollectionPicker=toggleModalCollectionPicker;
+  async function addCollectionToCurrent(collectionId){
+    const r=current(); if(!r || !collectionId || isRecordCabinet(collectionId)) return;
+    const ids=[...new Set([...collectionIdsForRecord(r), collectionId])];
+    await saveRecord(r,{collection_ids:ids, collections:internalCollections(ids)},'collection_update');
+  }
+  window.addCollectionToCurrent=addCollectionToCurrent;
+  async function removeCollectionFromCurrent(collectionId){
+    const r=current(); if(!r || !collectionId || isRecordCabinet(collectionId)) return;
+    const ids=collectionIdsForRecord(r).filter(id=>id!==collectionId);
+    await saveRecord(r,{collection_ids:ids, collections:internalCollections(ids)},'collection_update');
+  }
+  window.removeCollectionFromCurrent=removeCollectionFromCurrent;
+  async function createCollectionForCurrent(){
+    const name=prompt('New collection label');
+    if(!name || !name.trim()) return;
+    if(isRecordCabinet(name)){ alert('Record Cabinet is the hidden base layer, not a visible label.'); return; }
+    const id=name.trim().toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+    const {error}=await SB.from('collections').upsert({id,name:name.trim(),user_id:state.user.id,locked:false},{onConflict:'user_id,id'});
+    if(error){ alert(error.message); return; }
+    await loadAll();
+    await addCollectionToCurrent(id);
+  }
+  window.createCollectionForCurrent=createCollectionForCurrent;
 
   async function toggleListened(){ const r=current(); await saveRecord(r,{listened:!r.listened,listened_at:!r.listened?new Date().toISOString():r.listened_at},'listened_update'); }
   window.toggleListened=toggleListened;
@@ -565,10 +609,10 @@
     renderCollectionSelect(r);
     renderTrackEditor(tracks(r||{}));
     prevImg();
-    $('#fOv').classList.add('on'); $('#fOv').setAttribute('aria-hidden','false');
+    $('#fOv').classList.add('on'); lockPage(); $('#fOv').setAttribute('aria-hidden','false');
   }
   window.openForm=openForm;
-  function closeForm(){ $('#fOv').classList.remove('on'); $('#fOv').setAttribute('aria-hidden','true'); }
+  function closeForm(){ $('#fOv').classList.remove('on'); $('#fOv').setAttribute('aria-hidden','true'); unlockPage(); }
   window.closeForm=closeForm;
 
   function renderCollectionSelect(r){
@@ -672,9 +716,9 @@
   function closeUserMenu(){ $('#userMenu').classList.remove('on'); $('#userMenuBtn').setAttribute('aria-expanded','false'); }
   window.closeUserMenu=closeUserMenu;
 
-  function openSett(){ renderUserSettings(); $('#sOv').classList.add('on'); $('#sOv').setAttribute('aria-hidden','false'); }
+  function openSett(){ renderUserSettings(); $('#sOv').classList.add('on'); $('#sOv').setAttribute('aria-hidden','false'); lockPage(); }
   window.openSett=openSett;
-  function closeSett(){ $('#sOv').classList.remove('on'); $('#sOv').setAttribute('aria-hidden','true'); }
+  function closeSett(){ $('#sOv').classList.remove('on'); $('#sOv').setAttribute('aria-hidden','true'); unlockPage(); }
   window.closeSett=closeSett;
   function showUserTab(name){
     $$('.user-tab').forEach(b=>b.classList.remove('on'));
@@ -700,7 +744,7 @@
   function renderCollectionManager(){
     const list=$('#collectionList'); if(!list) return;
     const rows=visibleCollectionRows(state.collections);
-    list.innerHTML=rows.map(c=>`<div class="collection-item"><div><div class="collection-name">${esc(c.name)}</div><div class="collection-meta">${esc(c.id)}</div></div><button class="btn-sec dng" onclick="deleteCollection('${esc(c.id)}')">Remove</button></div>`).join('') || '<div class="tip">No collection labels yet.</div>';
+    list.innerHTML=rows.map(c=>`<div class="collection-item"><div><div class="collection-name">${esc(c.name)}</div><div class="collection-meta">${esc(c.id)}</div></div><div style="display:flex;gap:.35rem"><button class="btn-sec" onclick="renameCollection('${esc(c.id)}')">Rename</button><button class="btn-sec dng" onclick="deleteCollection('${esc(c.id)}')">Remove</button></div></div>`).join('') || '<div class="tip">No collection labels yet.</div>';
   }
 
   async function addCollection(){
@@ -712,6 +756,17 @@
     $('#newCollectionName').value=''; await loadAll(); renderUserSettings();
   }
   window.addCollection=addCollection;
+  async function renameCollection(id){
+    if(isRecordCabinet(id)){ alert('Record Cabinet is implicit and cannot be renamed.'); return; }
+    const row=state.collections.find(c=>c.id===id); if(!row) return;
+    const name=prompt('Rename collection label', row.name);
+    if(!name || !name.trim() || name.trim()===row.name) return;
+    if(isRecordCabinet(name)){ alert('Record Cabinet is the hidden base layer, not a visible label.'); return; }
+    const {error}=await SB.from('collections').update({name:name.trim()}).eq('user_id',state.user.id).eq('id',id);
+    if(error){ alert(error.message); return; }
+    await loadAll(); renderUserSettings(); if(state.currentId){ const r=current(); if(r) renderModalCollections(r); }
+  }
+  window.renameCollection=renameCollection;
   async function deleteCollection(id){
     if(isRecordCabinet(id)){ alert('Record Cabinet is implicit and cannot be removed as a visible label.'); return; }
     if(!confirm('Remove this collection label?')) return;
@@ -727,14 +782,62 @@
   window.saveSett=saveSett;
   function fetchMissingDiscogs(){ alert('Bulk Discogs fetching is intentionally not enabled yet. Refresh per record for now.'); }
   window.fetchMissingDiscogs=fetchMissingDiscogs;
-  function exportDiscogsDb(){ alert('This Supabase-native build does not export dead_wax_db.js. Supabase is the source of truth.'); }
+  function csvEscape(v){ const str=String(v??''); return /[",\n;]/.test(str) ? '"'+str.replace(/"/g,'""')+'"' : str; }
+  function collectionExportName(r){ return collectionNames(r).join('; '); }
+  function recordsForExport(){ return [...state.records].sort(shelfCompare); }
+  function downloadBlob(name, type, content){ const blob=new Blob([content],{type}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),1500); }
+  function exportCsv(){
+    const headers=['Shelf ID','Artist','Album','First name','Last name','Copies owned','Listened','Reaction','Grail','Collections','Genre','Year','Label','Country','Discogs URL','Cover URL','Notes','Tracklist'];
+    const rows=recordsForExport().map(r=>[recordCode(r),r.artist,r.album,r.first,r.last,r.copies_owned,r.listened?'yes':'no',reactionValue(r),r.grail?'yes':'no',collectionExportName(r),r.genre,displayYear(r),r.label,r.country,r.discogs_url,coverUrl(r),r.note,tracks(r).map(t=>[t.position,t.title,t.duration].filter(Boolean).join(' | ')).join('\n')]);
+    downloadBlob(`dead-wax-collection-${new Date().toISOString().slice(0,10)}.csv`,'text/csv;charset=utf-8',[headers,...rows].map(row=>row.map(csvEscape).join(',')).join('\n'));
+  }
+  window.exportCsv=exportCsv;
+  function exportExcel(){
+    const headers=['Shelf ID','Artist','Album','First name','Last name','Copies owned','Listened','Reaction','Grail','Collections','Genre','Year','Label','Country','Discogs URL','Cover URL','Notes'];
+    const body=recordsForExport().map(r=>`<tr>${[recordCode(r),r.artist,r.album,r.first,r.last,r.copies_owned,r.listened?'yes':'no',reactionValue(r),r.grail?'yes':'no',collectionExportName(r),r.genre,displayYear(r),r.label,r.country,r.discogs_url,coverUrl(r),r.note].map(x=>`<td>${esc(x)}</td>`).join('')}</tr>`).join('');
+    const html=`<!doctype html><html><head><meta charset="utf-8"><style>td,th{border:1px solid #999;padding:4px;font-family:Arial;font-size:11pt}th{background:#eee}</style></head><body><table><thead><tr>${headers.map(h=>`<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${body}</tbody></table></body></html>`;
+    downloadBlob(`dead-wax-collection-${new Date().toISOString().slice(0,10)}.xls`,'application/vnd.ms-excel;charset=utf-8',html);
+  }
+  window.exportExcel=exportExcel;
+  function exportPdf(){
+    const w=window.open('','_blank');
+    const rows=recordsForExport().map(r=>`<tr><td>${esc(recordCode(r))}</td><td>${esc(r.artist)}</td><td>${esc(r.album)}</td><td>${esc(collectionExportName(r))}</td><td>${esc(r.genre||'')}</td></tr>`).join('');
+    w.document.write(`<!doctype html><html><head><title>Dead Wax Collection</title><style>body{font-family:Arial,sans-serif;padding:24px;color:#111}h1{font-family:Georgia,serif}table{border-collapse:collapse;width:100%}th,td{border-bottom:1px solid #ddd;text-align:left;padding:6px 8px;font-size:11px}th{background:#f2f2f2}.meta{color:#666;margin-bottom:18px}@media print{button{display:none}}</style></head><body><button onclick="window.print()">Save as PDF / Print</button><h1>Dead Wax Collection</h1><div class="meta">${state.records.length} records · exported ${new Date().toLocaleString()}</div><table><thead><tr><th>Shelf ID</th><th>Artist</th><th>Album</th><th>Collections</th><th>Genre</th></tr></thead><tbody>${rows}</tbody></table><script>setTimeout(()=>window.print(),400)<\/script></body></html>`);
+    w.document.close();
+  }
+  window.exportPdf=exportPdf;
+  function parseCsv(text){ const rows=[]; let row=[], cell='', q=false; for(let i=0;i<text.length;i++){ const ch=text[i], nx=text[i+1]; if(q){ if(ch==='"'&&nx==='"'){cell+='"';i++;} else if(ch==='"'){q=false;} else cell+=ch; } else if(ch==='"') q=true; else if(ch===','||ch===';'){ row.push(cell); cell=''; } else if(ch==='\n'){ row.push(cell); rows.push(row); row=[]; cell=''; } else if(ch!=='\r') cell+=ch; } row.push(cell); rows.push(row); return rows.filter(r=>r.some(c=>String(c).trim())); }
+  function getField(obj, names){ for(const n of names){ const k=Object.keys(obj).find(x=>norm(x)===norm(n)); if(k && obj[k]!==undefined) return obj[k]; } return ''; }
+  async function handleImport(event){
+    const file=event?.target?.files?.[0]; if(!file) return;
+    if(!/\.csv$|\.txt$/i.test(file.name)){ alert('For now this native importer accepts CSV. Excel can export as CSV, and full .xlsx support can be added later.'); return; }
+    const rows=parseCsv(await file.text()); if(rows.length<2){ alert('No rows found.'); return; }
+    const headers=rows[0].map(h=>String(h).trim());
+    const objects=rows.slice(1).map(r=>Object.fromEntries(headers.map((h,i)=>[h,r[i]||''])));
+    const valid=objects.map((o,i)=>({o,i:i+2,artist:getField(o,['artist','artist name','artis']),album:getField(o,['album','title','record','release'])})).filter(x=>x.artist.trim() && x.album.trim());
+    if(!valid.length){ alert('Import needs at least Artist and Album columns. Shelf ID, First name and Last name are optional.'); return; }
+    if(!confirm(`Import ${valid.length} records from CSV? Artist and Album are required; Shelf ID is optional.`)) return;
+    setSync('Importing CSV'); let ok=0, fail=0;
+    for(const {o,artist,album} of valid){
+      const shelf=(getField(o,['shelf id','shelf_id','code','id'])||'').trim();
+      const cols=(getField(o,['collections','collection','labels'])||'').split(/[|;]/).map(x=>x.trim()).filter(Boolean).filter(x=>!isRecordCabinet(x));
+      const colIds=[];
+      for(const name of cols){ const id=name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''); if(!id) continue; const {error}=await SB.from('collections').upsert({id,name,user_id:state.user.id,locked:false},{onConflict:'user_id,id'}); if(!error) colIds.push(id); }
+      const payload={user_id:state.user.id,shelf_id:shelf||null,artist:artist.trim(),album:album.trim(),first:getField(o,['first','first name']).trim(),last:getField(o,['last','last name']).trim(),copies_owned:Number(getField(o,['copies','copies owned','owned'])||1),genre:getField(o,['genre']).trim(),discogs_url:getField(o,['discogs url','discogs','url']).trim(),note:getField(o,['notes','note']).trim(),collections:internalCollections(colIds),updated_at:new Date().toISOString()};
+      let res=shelf ? await SB.from('records').upsert(payload,{onConflict:'user_id,shelf_id'}).select('id').single() : await SB.from('records').insert(payload).select('id').single();
+      if(res.error){ fail++; continue; }
+      try{ await syncRecordCollections(res.data.id,colIds); }catch(e){} ok++;
+    }
+    await logChange('csv_import',null,{ok,fail,total:valid.length}); alert(`CSV import complete: ${ok} imported, ${fail} failed.`); event.target.value=''; await loadAll();
+  }
+  window.handleImport=handleImport;
+  function exportDiscogsDb(){ alert('This Supabase-native build does not export dead_wax_db.js. Use CSV, Excel-compatible .xls, or PDF from Database settings.'); }
   window.exportDiscogsDb=exportDiscogsDb;
   function clearDgCache(){ alert('No record cache is used as source of truth in this native build.'); }
   window.clearDgCache=clearDgCache;
   function openWebViewer(){ window.open('web.html','_blank'); }
   window.openWebViewer=openWebViewer;
-  function handleImport(){ alert('Importer is not shipped in this public native build. A CSV/Excel/Discogs importer can be added later as a proper account-scoped feature.'); }
-  window.handleImport=handleImport;
+
   function setHighContrast(on){
     document.documentElement.classList.toggle('dw-high-contrast',!!on);
     localStorage.setItem('dw_high_contrast',on?'1':'0');
@@ -757,6 +860,14 @@
   window.updateHdrH=updateHdrH;
 
 
+  function ensureDatabaseTools(){
+    const panel=$('#userPanelDatabase .settings-section');
+    if(panel && !$('#dwExportTools')){
+      panel.insertAdjacentHTML('beforeend',`<div class="s-btns" id="dwExportTools"><button type="button" class="btn-sec" onclick="exportCsv()">Download CSV</button><button type="button" class="btn-sec" onclick="exportExcel()">Download Excel</button><button type="button" class="btn-sec" onclick="exportPdf()">Download PDF</button><button type="button" class="btn-sec" onclick="document.getElementById('importFile').click()">Upload CSV</button></div><div class="tip">CSV import requires Artist and Album. Shelf ID, First name and Last name are optional. Extra columns such as Collection, Genre, Discogs URL, Notes and Copies are used when present.</div>`);
+    }
+    const f=$('#importFile'); if(f) f.setAttribute('accept','.csv,.txt');
+  }
+
   function ensureExactStaticAdditions(){
     const gs=$('#groupSelect');
     if(gs && ![...gs.options].some(o=>o.value==='shelf')){
@@ -769,7 +880,7 @@
   }
 
   function bindEvents(){
-    ensureExactStaticAdditions();
+    ensureExactStaticAdditions(); ensureDatabaseTools();
     $('#gSearch')?.addEventListener('input',e=>{ state.filters.global=e.target.value; renderSearchFlyout(e.target.value); applyFilters(); });
     [['fCode','code'],['fArtist','artist'],['fLast','last'],['fFirst','first'],['fAlbum','album']].forEach(([id,k])=>$('#'+id)?.addEventListener('input',e=>{state.filters[k]=e.target.value; applyFilters();}));
     $('#fGenre')?.addEventListener('change',e=>{state.filters.genre=e.target.value; applyFilters();});
