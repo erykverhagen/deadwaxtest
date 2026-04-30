@@ -22,7 +22,7 @@
     random: false,
     cfIndex: 0,
     collapsed: new Set(),
-    filters: {global:'', code:'', artist:'', last:'', first:'', album:'', genre:'', listened:false, rating:'', lastListened:'', grail:false}
+    filters: {global:'', code:'', artist:'', last:'', first:'', album:'', genre:'', listened:false, doubles:false, rating:'', lastListened:'', grail:false}
   };
 
   function esc(v){ return String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
@@ -159,6 +159,7 @@
     if(f.album) a=a.filter(r=>norm(r.album).includes(norm(f.album)));
     if(f.genre) a=a.filter(r=>(r.genre===f.genre || r.genres?.includes(f.genre)));
     if(f.listened) a=a.filter(r=>!!r.listened);
+    if(f.doubles) a=a.filter(r=>Number(r.copies_owned||r.owned||1)>1);
     if(f.grail) a=a.filter(r=>!!r.grail);
     if(f.rating) a=a.filter(r=>reactionValue(r)===f.rating);
     if(f.lastListened){
@@ -187,11 +188,13 @@
     else if(g==='artist') a.forEach(r=>add(r.artist || 'Unknown',r));
     else if(g==='decade') a.forEach(r=>{ const y=Number(displayYear(r)); add(y?`${Math.floor(y/10)*10}s`:'Unknown decade',r); });
     else if(g==='collection') a.forEach(r=>{ const names=collectionNames(r); (names.length?names:['Record Cabinet']).forEach(n=>add(n,r)); });
+    else if(g==='shelf') a.forEach(r=>{ const p=shelfParts(recordCode(r)); add(p[0] && p[0] !== '~' ? p[0] : 'No Shelf ID', r); });
     else a.forEach(r=>add(alphaKey(r),r));
     let groups=[...map.entries()];
     groups.sort((x,y)=>{
       if(g==='decade') return x[0].localeCompare(y[0],undefined,{numeric:true});
       if(g==='alpha') return x[0].localeCompare(y[0]);
+      if(g==='shelf') return x[0].localeCompare(y[0],undefined,{numeric:true});
       return x[0].localeCompare(y[0],undefined,{sensitivity:'base'});
     });
     groups.forEach(g=>g[1].sort(shelfCompare));
@@ -261,7 +264,7 @@
   function renderGrid(){
     const html=groupRecords(state.filtered).map(([label,rs])=>{
       const key=`${state.group}:${label}`;
-      return `<section class="${state.group==='alpha'?'letter-section':'genre-section'}" id="grp-${slug(label)}">${groupHeader(label,rs.length,state.group==='alpha'?'letter':'genre')}<div class="grp-body ${state.collapsed.has(key)?'collapsed':''}"><div class="records-grid">${rs.map(renderCard).join('')}</div></div></section>`;
+      return `<section class="${(state.group==='alpha'||state.group==='shelf')?'letter-section':'genre-section'}" id="grp-${slug(label)}">${groupHeader(label,rs.length,(state.group==='alpha'||state.group==='shelf')?'letter':'genre')}<div class="grp-body ${state.collapsed.has(key)?'collapsed':''}"><div class="records-grid">${rs.map(renderCard).join('')}</div></div></section>`;
     }).join('');
     $('#gridWrap').innerHTML = html || `<div class="no-res"><h3>No records found</h3><p>Try clearing filters.</p></div>`;
   }
@@ -646,7 +649,7 @@
   window.clearDgCache=clearDgCache;
   function openWebViewer(){ window.open('web.html','_blank'); }
   window.openWebViewer=openWebViewer;
-  function handleImport(){ alert('Migration importer lives at /tools/importer.html and should be removed after use.'); }
+  function handleImport(){ alert('Importer is not shipped in this public native build. A CSV/Excel/Discogs importer can be added later as a proper account-scoped feature.'); }
   window.handleImport=handleImport;
   function setHighContrast(on){
     document.documentElement.classList.toggle('dw-high-contrast',!!on);
@@ -669,15 +672,29 @@
   }
   window.updateHdrH=updateHdrH;
 
+
+  function ensureExactStaticAdditions(){
+    const gs=$('#groupSelect');
+    if(gs && ![...gs.options].some(o=>o.value==='shelf')){
+      gs.insertAdjacentHTML('beforeend','<option value="shelf">Shelf ID</option>');
+    }
+    const menu=$('#userMenu');
+    if(menu && !menu.querySelector('[data-dw-signout]')){
+      menu.insertAdjacentHTML('beforeend','<button type="button" class="user-menu-item" role="menuitem" data-dw-signout onclick="signOut()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg><span>Sign out</span></button>');
+    }
+  }
+
   function bindEvents(){
+    ensureExactStaticAdditions();
     $('#gSearch')?.addEventListener('input',e=>{ state.filters.global=e.target.value; renderSearchFlyout(e.target.value); applyFilters(); });
     [['fCode','code'],['fArtist','artist'],['fLast','last'],['fFirst','first'],['fAlbum','album']].forEach(([id,k])=>$('#'+id)?.addEventListener('input',e=>{state.filters[k]=e.target.value; applyFilters();}));
     $('#fGenre')?.addEventListener('change',e=>{state.filters.genre=e.target.value; applyFilters();});
     $('#fListened')?.addEventListener('change',e=>{state.filters.listened=e.target.checked; applyFilters();});
+    $('#fDoubles')?.addEventListener('change',e=>{state.filters.doubles=e.target.checked; applyFilters();});
     $('#fRating')?.addEventListener('change',e=>{state.filters.rating=e.target.value; applyFilters();});
     $('#fLastListened')?.addEventListener('change',e=>{state.filters.lastListened=e.target.value; applyFilters();});
     $('#fGrail')?.addEventListener('change',e=>{state.filters.grail=e.target.checked; applyFilters();});
-    $('#btnClr')?.addEventListener('click',()=>{ state.filters={global:'', code:'', artist:'', last:'', first:'', album:'', genre:'', listened:false, rating:'', lastListened:'', grail:false}; ['gSearch','fCode','fArtist','fLast','fFirst','fAlbum'].forEach(id=>$('#'+id)&&( $('#'+id).value='' )); ['fGenre','fRating','fLastListened'].forEach(id=>$('#'+id)&&($('#'+id).value='')); ['fListened','fGrail'].forEach(id=>$('#'+id)&&($('#'+id).checked=false)); applyFilters(); });
+    $('#btnClr')?.addEventListener('click',()=>{ state.filters={global:'', code:'', artist:'', last:'', first:'', album:'', genre:'', listened:false, doubles:false, rating:'', lastListened:'', grail:false}; ['gSearch','fCode','fArtist','fLast','fFirst','fAlbum'].forEach(id=>$('#'+id)&&( $('#'+id).value='' )); ['fGenre','fRating','fLastListened'].forEach(id=>$('#'+id)&&($('#'+id).value='')); ['fListened','fDoubles','fGrail'].forEach(id=>$('#'+id)&&($('#'+id).checked=false)); applyFilters(); });
     $('#filterToggle')?.addEventListener('click',()=>{ const d=$('#filterDrawer'), b=$('#filterToggle'); d.classList.toggle('on'); b.setAttribute('aria-expanded',String(d.classList.contains('on'))); updateHdrH(); });
     $('#groupSelect')?.addEventListener('change',e=>setGroup(e.target.value));
     $('#secondaryGroupSelect')?.addEventListener('change',e=>setSecondaryGroup(e.target.value));

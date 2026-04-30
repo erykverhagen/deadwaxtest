@@ -3072,7 +3072,7 @@ html body #detModal .grail-detail-card{
   width:auto!important;
   margin:.08rem 0 0!important;
   padding:.9rem 0 .2rem 1.05rem!important;
-  border-top:1px solid rgba(244,234,210,.18)!important;
+  border-top:0!important;
   background:transparent!important;
   box-shadow:none!important;
   text-align:right!important;
@@ -3120,7 +3120,7 @@ html body #detModal .grail-detail-copy{display:none}
   html body #detModal .grail-detail-mark .dw-mark{animation:none}
 }
 html.dw-high-contrast #detModal .grail-detail-card{
-  border-top-color:var(--gl)!important;
+  border-top-color:transparent!important;
 }
 html.dw-high-contrast #detModal .grail-detail-title{
   color:var(--gl)!important;
@@ -3154,6 +3154,12 @@ html.dw-high-contrast #detModal .grail-detail-title{
 html body #detOv.ov, html body #detOv.ov.on{background:rgba(4,3,2,.34)!important;backdrop-filter:blur(10px) saturate(1.12)!important;-webkit-backdrop-filter:blur(10px) saturate(1.12)!important;align-items:center!important;justify-content:center!important;padding:1rem!important}
 html body #detModal.modal{width:100%!important;max-width:880px!important;max-height:88vh!important;overflow-y:auto!important;overflow-x:hidden!important;background:var(--s1)!important;background-color:var(--s1)!important;background-image:none!important;border:1px solid var(--b2)!important;border-radius:14px!important;opacity:1!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
 html body #detModal .m-top{align-items:flex-start!important}
+/* DEAD WAX DETAIL TOP ACTIONS PATCH — move Edit/Remove to bottom-right of top container */
+html body #detModal .m-top{position:relative!important;padding-bottom:3.85rem!important}
+html body #detModal .m-info{padding-bottom:.25rem!important}
+html body #detModal #mActions.m-actions{position:absolute!important;right:1.4rem!important;bottom:1.1rem!important;margin:0!important;display:flex!important;gap:.38rem!important;justify-content:flex-end!important;align-items:center!important;z-index:3!important}
+html body #detModal #mActions .btn-sm{min-width:0!important}
+@media(max-width:640px){html body #detModal #mActions.m-actions{right:1.4rem!important;bottom:1.1rem!important}}
 html body #detModal .m-cover-stack{width:196px!important;flex:0 0 196px!important;display:flex!important;flex-direction:column!important;gap:.68rem!important}
 html body #detModal .m-cover-stack .m-cover{width:196px!important;height:196px!important;background:var(--s2)!important}
 html body #detModal #mStateBox,html body #detModal .m-statebox{width:100%!important;margin:0!important;padding:0!important;display:block!important;background:transparent!important;background-color:transparent!important;background-image:none!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;overflow:visible!important}
@@ -3243,3 +3249,890 @@ html.dw-high-contrast .header-select-wrap,html.dw-high-contrast .user-menu{borde
 .form-id-row{grid-column:1/-1;display:grid;grid-template-columns:minmax(120px,.75fr) minmax(170px,1fr) minmax(120px,.75fr);gap:.75rem;align-items:end}.grail-field{height:100%;min-height:3.72rem;display:flex;align-items:center;gap:.55rem;background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:.62rem .72rem;color:var(--mt);font-size:.72rem;line-height:1.35}.grail-field input{accent-color:var(--gold);width:auto;flex:0 0 auto}.grail-field strong{color:var(--cream);font-weight:500}.listened-stamp{display:block;margin-top:.22rem;font-size:.52rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gd)}
 @media(max-width:980px){.h1{flex-wrap:wrap}.search-wrap{order:3;flex-basis:100%}.h-right{margin-left:auto}.h2.filter-drawer{margin-left:1rem;margin-right:1rem}.form-id-row{grid-template-columns:1fr}}html.dw-high-contrast .header-select-wrap,html.dw-high-contrast .user-menu{border-color:var(--gd)}
 
+
+
+/* DEAD WAX DETAIL TOP ALIGNMENT PATCH — 2026-04-28
+   Align Edit/Remove with the listened/reaction status row and move the Grail statement up/left. */
+html body #detModal .m-top{
+  position:relative!important;
+  padding-bottom:1.1rem!important;
+}
+html body #detModal #mActions.m-actions{
+  position:absolute!important;
+  right:1.4rem!important;
+  top:calc(1.35rem + 196px + .68rem)!important;
+  bottom:auto!important;
+  margin:0!important;
+  min-height:2.25rem!important;
+  display:flex!important;
+  gap:.38rem!important;
+  justify-content:flex-end!important;
+  align-items:center!important;
+  z-index:4!important;
+}
+html body #detModal #mActions .btn-sm{
+  height:2.25rem!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:0 .72rem!important;
+}
+html body #detModal.grail-detail .grail-detail-card{
+  justify-self:start!important;
+  align-self:start!important;
+  margin:-.02rem 0 0 -.55rem!important;
+  padding:0 0 .2rem .35rem!important;
+  max-width:250px!important;
+  text-align:left!important;
+  align-items:start!important;
+}
+html body #detModal.grail-detail .grail-detail-card .grail-detail-text{
+  padding-top:0!important;
+}
+html body #detModal.grail-detail .grail-detail-card .grail-detail-mark{
+  margin-top:-.08rem!important;
+}
+@media(max-width:860px){
+  html body #detModal #mActions.m-actions{
+    position:static!important;
+    margin-top:.65rem!important;
+    justify-content:flex-start!important;
+  }
+  html body #detModal .m-top{
+    padding-bottom:1.1rem!important;
+  }
+  html body #detModal.grail-detail .grail-detail-card{
+    margin:.55rem 0 0!important;
+    padding:.55rem 0 0!important;
+    max-width:none!important;
+  }
+}
+
+/* DEAD WAX GRAIL AMBER TOP + ACTION EMPHASIS PATCH - 2026-04-28
+   Replaces the separate grail badge/card with a full amber top-container state.
+   Keeps Edit/Remove aligned to the listened/reaction row, with Edit as primary. */
+html body #detModal #mActions .btn-sm.ed{
+  background:linear-gradient(180deg,var(--gl),var(--gold))!important;
+  background-color:var(--gold)!important;
+  border-color:var(--gl)!important;
+  color:#0b0906!important;
+  font-weight:700!important;
+  box-shadow:0 6px 16px rgba(0,0,0,.26),0 0 0 1px rgba(244,234,210,.12) inset!important;
+}
+html body #detModal #mActions .btn-sm.ed:hover{
+  filter:brightness(1.06)!important;
+  transform:translateY(-1px)!important;
+}
+html body #detModal #mActions .btn-sm.dl{
+  background:transparent!important;
+  border-color:rgba(210,81,69,.34)!important;
+  color:rgba(244,234,210,.58)!important;
+  font-weight:400!important;
+  box-shadow:none!important;
+}
+html body #detModal #mActions .btn-sm.dl:hover{
+  border-color:var(--red)!important;
+  color:var(--red)!important;
+  background:rgba(210,81,69,.08)!important;
+}
+html body #detModal.grail-detail .m-top{
+  grid-template-columns:196px minmax(0,1fr)!important;
+  background:linear-gradient(135deg,#d09a24 0%,#b47b16 48%,#7a5010 100%)!important;
+  background-color:var(--gold)!important;
+  border-bottom:1px solid rgba(11,9,6,.42)!important;
+  box-shadow:inset 0 1px 0 rgba(244,234,210,.28),inset 0 -1px 0 rgba(11,9,6,.35)!important;
+  overflow:hidden!important;
+}
+html body #detModal.grail-detail .m-top::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:radial-gradient(circle at 24% 10%,rgba(244,234,210,.25),transparent 34%),linear-gradient(90deg,rgba(11,9,6,.06),transparent 38%,rgba(11,9,6,.18));
+  z-index:0;
+}
+html body #detModal.grail-detail .m-cover-stack,
+html body #detModal.grail-detail .m-info,
+html body #detModal.grail-detail #mActions{
+  position:relative!important;
+  z-index:1!important;
+}
+html body #detModal.grail-detail .grail-detail-card{
+  display:none!important;
+  pointer-events:none!important;
+}
+html body #detModal.grail-detail .m-code{
+  color:#211406!important;
+  text-shadow:0 1px 0 rgba(244,234,210,.16)!important;
+}
+html body #detModal.grail-detail .m-code::after{
+  content:' · GRAIL RECORD';
+  color:#3a2508;
+  letter-spacing:.16em;
+}
+html body #detModal.grail-detail .m-artist{
+  color:#0b0906!important;
+  text-shadow:0 1px 0 rgba(244,234,210,.22)!important;
+}
+html body #detModal.grail-detail .m-album{
+  color:#2f210e!important;
+}
+html body #detModal.grail-detail .chip{
+  background:rgba(11,9,6,.16)!important;
+  border-color:rgba(11,9,6,.26)!important;
+  color:#20170d!important;
+}
+html body #detModal.grail-detail .chip.g{
+  background:rgba(11,9,6,.24)!important;
+  border-color:rgba(11,9,6,.32)!important;
+  color:#0b0906!important;
+  font-weight:600!important;
+}
+html body #detModal.grail-detail .m-collection-shell,
+html body #detModal.grail-detail .m-collection-chip{
+  color:#20170d!important;
+}
+html body #detModal.grail-detail .m-cover{
+  border-color:rgba(11,9,6,.48)!important;
+  box-shadow:0 12px 28px rgba(0,0,0,.34),0 0 0 1px rgba(244,234,210,.22)!important;
+}
+html body #detModal.grail-detail #mStateBox .m-listen-btn,
+html body #detModal.grail-detail #mStateBox .m-rate-btn{
+  background:rgba(11,9,6,.18)!important;
+  border-color:rgba(11,9,6,.34)!important;
+  color:#1b1207!important;
+}
+html body #detModal.grail-detail #mStateBox .m-listen-btn.on,
+html body #detModal.grail-detail #mStateBox .m-rate-btn.on{
+  background:rgba(11,9,6,.32)!important;
+  border-color:rgba(11,9,6,.48)!important;
+  color:#0b0906!important;
+  font-weight:700!important;
+}
+html body #detModal.grail-detail .m-state-divider{
+  background:linear-gradient(180deg,transparent,rgba(11,9,6,.5),transparent)!important;
+}
+html body #detModal.grail-detail .m-close{
+  z-index:8!important;
+  background:#0b0906!important;
+  border-color:rgba(244,234,210,.32)!important;
+  color:var(--gl)!important;
+  box-shadow:0 6px 18px rgba(0,0,0,.34)!important;
+}
+html body #detModal.grail-detail .m-close:hover{
+  background:#20170d!important;
+  color:#f4ead2!important;
+}
+@media(max-width:640px){
+  html body #detModal.grail-detail .m-code::after{display:block;margin-top:.16rem}
+}
+
+
+
+/* DEAD WAX GRAIL AMBER READABILITY PATCH - 2026-04-28
+   Keeps the approved amber top container, but switches all top-detail typography
+   to a dark, high-contrast ink system so grail records remain readable. */
+html body #detModal.grail-detail .m-top{color:#120b04!important}
+html body #detModal.grail-detail .m-info,
+html body #detModal.grail-detail .m-info *{text-shadow:none!important}
+html body #detModal.grail-detail .m-code{color:#1a1005!important;opacity:1!important;font-weight:800!important;letter-spacing:.18em!important}
+html body #detModal.grail-detail .m-code::after{color:#211405!important;font-weight:900!important;opacity:1!important}
+html body #detModal.grail-detail .m-artist{color:#080503!important;opacity:1!important;font-weight:700!important}
+html body #detModal.grail-detail .m-album{color:#211405!important;opacity:1!important;font-weight:600!important}
+html body #detModal.grail-detail .m-meta,
+html body #detModal.grail-detail .m-sub,
+html body #detModal.grail-detail .m-info small{color:#2a1a08!important;opacity:1!important;font-weight:600!important}
+html body #detModal.grail-detail .chip{background:rgba(11,9,6,.24)!important;border-color:rgba(11,9,6,.42)!important;color:#0b0906!important;font-weight:700!important}
+html body #detModal.grail-detail .chip.g{background:rgba(11,9,6,.36)!important;border-color:rgba(11,9,6,.55)!important;color:#050302!important;font-weight:800!important}
+html body #detModal.grail-detail .m-collection-shell{color:#150d04!important;opacity:1!important;font-weight:700!important}
+html body #detModal.grail-detail .m-collection-chip{background:rgba(244,234,210,.42)!important;border-color:rgba(11,9,6,.36)!important;color:#080503!important;font-weight:800!important}
+html body #detModal.grail-detail .m-collection-chip-remove{color:#080503!important;opacity:1!important}
+html body #detModal.grail-detail #mStateBox .m-listen-btn,
+html body #detModal.grail-detail #mStateBox .m-rate-btn{background:rgba(244,234,210,.34)!important;border-color:rgba(11,9,6,.38)!important;color:#0b0906!important;font-weight:800!important}
+html body #detModal.grail-detail #mStateBox .m-listen-btn.on,
+html body #detModal.grail-detail #mStateBox .m-rate-btn.on{background:#0b0906!important;border-color:rgba(244,234,210,.55)!important;color:#f4ead2!important;font-weight:900!important}
+html body #detModal.grail-detail #mActions .btn-sm.ed{background:#0b0906!important;border-color:#0b0906!important;color:#f4ead2!important;font-weight:900!important}
+html body #detModal.grail-detail #mActions .btn-sm.dl{background:rgba(11,9,6,.12)!important;border-color:rgba(11,9,6,.34)!important;color:#291808!important;font-weight:700!important}
+html body #detModal.grail-detail #mActions .btn-sm.dl:hover{background:rgba(210,81,69,.18)!important;border-color:rgba(90,26,18,.78)!important;color:#3a0f09!important}
+
+
+/* DEAD WAX VERIFIED GRAIL AMBER ACTIONS + COMPACTNESS PATCH - 2026-04-28
+   This final override is intentionally placed last so older experimental patches cannot win.
+   Goals: keep amber grail top, keep readable dark typography, keep Edit/Remove visible,
+   align actions with listened/liked row, and avoid extra blank space below the top section. */
+html body #detModal .m-top,
+html body #detModal.grail-detail .m-top{
+  position:relative!important;
+  padding:1.35rem 1.4rem 1.1rem!important;
+  padding-bottom:1.1rem!important;
+  min-height:calc(1.35rem + 196px + .72rem + 2.25rem + 1.1rem)!important;
+  overflow:visible!important;
+}
+html body #detModal.grail-detail .m-top{
+  background:linear-gradient(135deg,#d09a24 0%,#c58a1d 52%,#9f6a12 100%)!important;
+  background-color:#d09a24!important;
+  color:#0b0906!important;
+  border-bottom:1px solid rgba(11,9,6,.42)!important;
+  box-shadow:inset 0 1px 0 rgba(244,234,210,.28),inset 0 -1px 0 rgba(11,9,6,.28)!important;
+}
+html body #detModal.grail-detail .m-top::before{
+  content:''!important;
+  position:absolute!important;
+  inset:0!important;
+  pointer-events:none!important;
+  z-index:0!important;
+  background:radial-gradient(circle at 24% 10%,rgba(244,234,210,.22),transparent 34%),linear-gradient(90deg,rgba(11,9,6,.04),transparent 42%,rgba(11,9,6,.13))!important;
+}
+html body #detModal .m-cover-stack,
+html body #detModal .m-info,
+html body #detModal #mActions{
+  position:relative!important;
+  z-index:2!important;
+}
+html body #detModal #mActions.m-actions,
+html body #detModal.grail-detail #mActions.m-actions{
+  position:absolute!important;
+  right:1.4rem!important;
+  top:calc(1.35rem + 196px + .72rem)!important;
+  bottom:auto!important;
+  margin:0!important;
+  min-height:2.25rem!important;
+  display:flex!important;
+  visibility:visible!important;
+  opacity:1!important;
+  gap:.42rem!important;
+  justify-content:flex-end!important;
+  align-items:center!important;
+  z-index:30!important;
+  pointer-events:auto!important;
+}
+html body #detModal #mActions .btn-sm,
+html body #detModal.grail-detail #mActions .btn-sm{
+  height:2.25rem!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:0 .78rem!important;
+  border-radius:5px!important;
+  opacity:1!important;
+  visibility:visible!important;
+}
+html body #detModal #mActions .btn-sm.ed,
+html body #detModal.grail-detail #mActions .btn-sm.ed{
+  background:#0b0906!important;
+  border-color:#0b0906!important;
+  color:#f4ead2!important;
+  font-weight:900!important;
+  box-shadow:0 7px 18px rgba(0,0,0,.28)!important;
+}
+html body #detModal #mActions .btn-sm.dl,
+html body #detModal.grail-detail #mActions .btn-sm.dl{
+  background:rgba(11,9,6,.10)!important;
+  border-color:rgba(11,9,6,.30)!important;
+  color:#2a1707!important;
+  font-weight:700!important;
+  box-shadow:none!important;
+}
+html body #detModal #mActions .btn-sm.dl:hover,
+html body #detModal.grail-detail #mActions .btn-sm.dl:hover{
+  background:rgba(210,81,69,.18)!important;
+  border-color:rgba(90,26,18,.78)!important;
+  color:#3a0f09!important;
+}
+html body #detModal.grail-detail .grail-detail-card{
+  display:none!important;
+  pointer-events:none!important;
+}
+html body #detModal.grail-detail .m-code,
+html body #detModal.grail-detail .m-code::after,
+html body #detModal.grail-detail .m-artist,
+html body #detModal.grail-detail .m-album,
+html body #detModal.grail-detail .m-meta,
+html body #detModal.grail-detail .m-sub,
+html body #detModal.grail-detail .m-info small{
+  text-shadow:none!important;
+  opacity:1!important;
+}
+html body #detModal.grail-detail .m-code{color:#160d04!important;font-weight:900!important;letter-spacing:.18em!important}
+html body #detModal.grail-detail .m-code::after{content:' · GRAIL RECORD'!important;color:#231405!important;font-weight:900!important;letter-spacing:.16em!important}
+html body #detModal.grail-detail .m-artist{color:#070402!important;font-weight:700!important}
+html body #detModal.grail-detail .m-album{color:#241606!important;font-weight:600!important}
+html body #detModal.grail-detail .chip{background:rgba(11,9,6,.22)!important;border-color:rgba(11,9,6,.40)!important;color:#080503!important;font-weight:800!important}
+html body #detModal.grail-detail .chip.g{background:rgba(11,9,6,.34)!important;border-color:rgba(11,9,6,.52)!important;color:#040201!important;font-weight:900!important}
+html body #detModal.grail-detail .m-collection-shell{color:#120b04!important;font-weight:800!important}
+html body #detModal.grail-detail .m-collection-chip{background:rgba(244,234,210,.42)!important;border-color:rgba(11,9,6,.36)!important;color:#070402!important;font-weight:800!important}
+html body #detModal.grail-detail #mStateBox .m-listen-btn,
+html body #detModal.grail-detail #mStateBox .m-rate-btn{background:rgba(244,234,210,.34)!important;border-color:rgba(11,9,6,.38)!important;color:#0b0906!important;font-weight:800!important}
+html body #detModal.grail-detail #mStateBox .m-listen-btn.on,
+html body #detModal.grail-detail #mStateBox .m-rate-btn.on{background:#0b0906!important;border-color:rgba(244,234,210,.55)!important;color:#f4ead2!important;font-weight:900!important}
+html body #detModal .m-top + .m-div,
+html body #detModal.grail-detail .m-top + .m-div{margin-top:0!important}
+@media(max-width:640px){
+  html body #detModal #mActions.m-actions,
+  html body #detModal.grail-detail #mActions.m-actions{
+    position:static!important;
+    margin-top:.65rem!important;
+    justify-content:flex-start!important;
+  }
+  html body #detModal .m-top,
+  html body #detModal.grail-detail .m-top{
+    min-height:0!important;
+    padding:1.1rem 1rem!important;
+  }
+  html body #detModal.grail-detail .m-code::after{display:block;margin-top:.16rem}
+}
+
+/* DEAD WAX ACTION ORDER + CLOSE HITBOX PATCH - 2026-04-28
+   Scope: both grail and non-grail detail top layouts. */
+html body #detModal .m-close,
+html body #detModal.grail-detail .m-close{
+  position:absolute!important;
+  z-index:120!important;
+  pointer-events:auto!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+html body #detModal #mActions.m-actions,
+html body #detModal.grail-detail #mActions.m-actions{
+  flex-direction:row!important;
+  gap:.44rem!important;
+}
+html body #detModal #mActions .btn-sm.dl,
+html body #detModal.grail-detail #mActions .btn-sm.dl{
+  order:1!important;
+  flex:0 0 5.35rem!important;
+  width:5.35rem!important;
+  min-width:5.35rem!important;
+  max-width:5.35rem!important;
+  padding:0 .55rem!important;
+}
+html body #detModal #mActions .btn-sm.ed,
+html body #detModal.grail-detail #mActions .btn-sm.ed{
+  order:2!important;
+  flex:0 0 10.7rem!important;
+  width:10.7rem!important;
+  min-width:10.7rem!important;
+  max-width:10.7rem!important;
+  padding:0 .8rem!important;
+}
+html body #detModal:not(.grail-detail) #mActions .btn-sm.dl{
+  background:rgba(210,81,69,.14)!important;
+  border-color:rgba(210,81,69,.48)!important;
+  color:#f1b7ad!important;
+  font-weight:800!important;
+}
+html body #detModal:not(.grail-detail) #mActions .btn-sm.dl:hover{
+  background:rgba(210,81,69,.24)!important;
+  border-color:rgba(210,81,69,.78)!important;
+  color:#ffe2dc!important;
+}
+html body #detModal:not(.grail-detail) #mActions .btn-sm.ed{
+  background:#d09a24!important;
+  border-color:#f0c34f!important;
+  color:#0b0906!important;
+  font-weight:900!important;
+}
+html body #detModal:not(.grail-detail) #mActions .btn-sm.ed:hover{
+  background:#f0c34f!important;
+  border-color:#f4ead2!important;
+  color:#0b0906!important;
+}
+html body #detModal.grail-detail #mActions .btn-sm.dl{
+  background:rgba(11,9,6,.18)!important;
+  border-color:rgba(11,9,6,.42)!important;
+  color:#2a1707!important;
+  font-weight:800!important;
+}
+html body #detModal.grail-detail #mActions .btn-sm.ed{
+  background:#0b0906!important;
+  border-color:#0b0906!important;
+  color:#f4ead2!important;
+  font-weight:900!important;
+}
+@media(max-width:640px){
+  html body #detModal #mActions .btn-sm.dl,
+  html body #detModal.grail-detail #mActions .btn-sm.dl{
+    flex:1 1 33.333%!important;
+    width:auto!important;
+    min-width:0!important;
+    max-width:none!important;
+  }
+  html body #detModal #mActions .btn-sm.ed,
+  html body #detModal.grail-detail #mActions .btn-sm.ed{
+    flex:2 1 66.666%!important;
+    width:auto!important;
+    min-width:0!important;
+    max-width:none!important;
+  }
+}
+
+
+
+/* DEAD WAX EDIT FORM POLISH — recovered on action-order baseline */
+html body .id-label-row{display:inline-flex!important;align-items:center!important;gap:.48rem!important;width:auto!important;}
+html body .id-label-row label{line-height:16px!important;}
+html body .id-info-btn{flex:0 0 16px!important;margin-left:.08rem!important;transform:none!important;background:var(--s1)!important;border-color:rgba(208,154,36,.32)!important;color:var(--gd)!important;box-shadow:inset 0 1px 0 rgba(240,195,79,.05)!important;}
+html body .id-info-btn:hover,html body .id-info-btn:focus-visible{color:var(--gold)!important;border-color:rgba(208,154,36,.62)!important;background:var(--s2)!important;}
+html body .grail-field{min-height:2.37rem!important;height:2.37rem!important;padding:.46rem .65rem!important;display:flex!important;align-items:center!important;gap:.52rem!important;background:var(--s2)!important;border:1px solid var(--b2)!important;border-radius:4px!important;color:var(--cream)!important;letter-spacing:0!important;text-transform:none!important;font-size:.74rem!important;font-weight:300!important;}
+html body .grail-field input[type="checkbox"]{appearance:none!important;-webkit-appearance:none!important;width:16px!important;height:16px!important;flex:0 0 16px!important;margin:0!important;border:1px solid rgba(208,154,36,.45)!important;border-radius:4px!important;background:var(--s1)!important;box-shadow:inset 0 1px 0 rgba(240,195,79,.05)!important;display:grid!important;place-items:center!important;cursor:pointer!important;}
+html body .grail-field input[type="checkbox"]::before{content:'';width:8px;height:5px;border-left:2px solid var(--bg);border-bottom:2px solid var(--bg);transform:rotate(-45deg) scale(0);transform-origin:center;transition:transform .12s ease;}
+html body .grail-field input[type="checkbox"]:checked{background:var(--gold)!important;border-color:var(--gold)!important;}
+html body .grail-field input[type="checkbox"]:checked::before{transform:rotate(-45deg) scale(1);}
+html body .grail-field span{display:flex!important;align-items:center!important;gap:.35rem!important;min-width:0!important;color:var(--mt)!important;line-height:1!important;}
+html body .grail-field strong{color:var(--cream)!important;font-weight:600!important;font-size:.72rem!important;letter-spacing:.08em!important;text-transform:uppercase!important;white-space:nowrap!important;}
+html body .grail-field .grail-help{color:var(--m2)!important;font-size:.62rem!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;}
+html body .copies-stepper{display:grid!important;grid-template-columns:2rem 3.2rem 2rem!important;align-items:center!important;width:max-content!important;max-width:100%!important;background:var(--s2)!important;border:1px solid var(--b2)!important;border-radius:4px!important;overflow:hidden!important;}
+html body .copies-stepper input{width:3.2rem!important;min-width:0!important;height:2.32rem!important;padding:.32rem .2rem!important;text-align:center!important;border:0!important;border-left:1px solid var(--bd)!important;border-right:1px solid var(--bd)!important;border-radius:0!important;background:var(--s1)!important;color:var(--cream)!important;font-weight:500!important;font-variant-numeric:tabular-nums!important;}
+html body .copies-stepper input::-webkit-outer-spin-button,html body .copies-stepper input::-webkit-inner-spin-button{-webkit-appearance:none!important;margin:0!important;}
+html body .copies-stepper input[type=number]{-moz-appearance:textfield!important;}
+html body .copy-step-btn{height:2.32rem!important;width:2rem!important;display:flex!important;align-items:center!important;justify-content:center!important;background:var(--s2)!important;color:var(--gold)!important;border:0!important;font-family:'Jost',sans-serif!important;font-size:1rem!important;font-weight:500!important;line-height:1!important;cursor:pointer!important;transition:background .14s ease,color .14s ease!important;}
+html body .copy-step-btn:hover,html body .copy-step-btn:focus-visible{background:rgba(208,154,36,.12)!important;color:var(--gl)!important;outline:none!important;}
+
+
+
+/* DEAD WAX EDIT FORM GRAIL STRUCTURAL FIX — 2026-04-28 */
+html body #formModal .form-id-row{align-items:end!important;}
+html body #formModal .grail-ff{display:flex!important;flex-direction:column!important;justify-content:flex-end!important;}
+html body #formModal .grail-toggle.grail-field{box-sizing:border-box!important;min-height:2.37rem!important;height:2.37rem!important;width:100%!important;display:grid!important;grid-template-columns:16px minmax(0,1fr)!important;align-items:center!important;column-gap:.55rem!important;padding:.34rem .56rem!important;margin:0!important;background:var(--s1)!important;border:1px solid var(--bd)!important;border-radius:4px!important;color:var(--mt)!important;cursor:pointer!important;line-height:1!important;overflow:hidden!important;}
+html body #formModal .grail-toggle.grail-field:hover{border-color:var(--b2)!important;background:var(--s2)!important;}
+html body #formModal .grail-toggle.grail-field input[type="checkbox"]{position:absolute!important;opacity:0!important;pointer-events:none!important;width:1px!important;height:1px!important;margin:0!important;appearance:none!important;-webkit-appearance:none!important;}
+html body #formModal .grail-toggle .grail-box{width:16px!important;height:16px!important;min-width:16px!important;min-height:16px!important;max-width:16px!important;max-height:16px!important;aspect-ratio:1/1!important;display:block!important;box-sizing:border-box!important;border:1px solid rgba(208,154,36,.62)!important;border-radius:3px!important;background:var(--s2)!important;box-shadow:inset 0 1px 0 rgba(244,234,210,.05)!important;position:relative!important;flex:none!important;}
+html body #formModal .grail-toggle input[type="checkbox"]:checked + .grail-box{background:var(--gold)!important;border-color:var(--gold)!important;box-shadow:0 0 0 1px rgba(11,9,6,.35), inset 0 1px 0 rgba(244,234,210,.28)!important;}
+html body #formModal .grail-toggle input[type="checkbox"]:checked + .grail-box::after{content:''!important;position:absolute!important;left:4px!important;top:2px!important;width:5px!important;height:9px!important;border:solid var(--bg)!important;border-width:0 2px 2px 0!important;transform:rotate(45deg)!important;}
+html body #formModal .grail-toggle input[type="checkbox"]:focus-visible + .grail-box{outline:2px solid rgba(240,195,79,.45)!important;outline-offset:2px!important;}
+html body #formModal .grail-toggle.grail-field.disabled,html body #formModal .grail-toggle input[type="checkbox"]:disabled + .grail-box,html body #formModal .grail-toggle input[type="checkbox"]:disabled ~ .grail-copy{opacity:.55!important;cursor:not-allowed!important;}
+html body #formModal .grail-copy{min-width:0!important;display:flex!important;align-items:baseline!important;gap:.42rem!important;overflow:hidden!important;white-space:nowrap!important;}
+html body #formModal .grail-copy strong{color:var(--cream)!important;font-size:.58rem!important;font-weight:600!important;letter-spacing:.14em!important;text-transform:uppercase!important;line-height:1!important;flex:0 0 auto!important;}
+html body #formModal .grail-copy .grail-help{color:var(--m2)!important;font-size:.62rem!important;font-weight:300!important;letter-spacing:0!important;text-transform:none!important;line-height:1!important;min-width:0!important;overflow:hidden!important;text-overflow:ellipsis!important;}
+@media(max-width:980px){html body #formModal .grail-toggle.grail-field{height:auto!important;min-height:2.37rem!important;}}
+
+
+/* DEAD WAX EDIT FORM GRAIL ALIGNMENT + COPIES RIGHT FIX — 2026-04-28
+   Scope: edit form top row only. Keeps the working custom grail checkbox and copies stepper. */
+html body #formModal .form-id-row{
+  grid-template-columns:minmax(120px,.75fr) minmax(170px,1fr) minmax(120px,.75fr)!important;
+  align-items:end!important;
+}
+html body #formModal .grail-toggle.grail-field{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:.64rem!important;
+  min-height:2.45rem!important;
+  height:2.45rem!important;
+  padding:.42rem .68rem!important;
+}
+html body #formModal .grail-toggle .grail-box{
+  flex:0 0 16px!important;
+  align-self:center!important;
+  margin:0!important;
+  transform:translateY(-1px)!important;
+}
+html body #formModal .grail-copy{
+  height:16px!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:.42rem!important;
+  line-height:16px!important;
+}
+html body #formModal .grail-copy strong,
+html body #formModal .grail-copy .grail-help{
+  line-height:16px!important;
+}
+html body #formModal .copies-field{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-end!important;
+}
+html body #formModal .copies-field label{
+  width:100%!important;
+  text-align:left!important;
+}
+html body #formModal .copies-stepper{
+  margin-left:auto!important;
+  margin-right:0!important;
+  justify-self:end!important;
+}
+@media(max-width:760px){
+  html body #formModal .copies-field{align-items:stretch!important;}
+  html body #formModal .copies-stepper{margin-left:0!important;width:max-content!important;}
+}
+
+
+
+/* DEAD WAX EDIT FORM GRAIL ID-INPUT ALIGNMENT FIX — 2026-04-28
+   Align the Grail control itself with the Shelf ID input field, not just the Grail text. */
+html body #formModal .form-id-row{
+  align-items:start!important;
+  grid-template-columns:minmax(120px,.75fr) minmax(170px,1fr) minmax(120px,.75fr)!important;
+  gap:.75rem!important;
+}
+html body #formModal .form-id-row > .ff{
+  min-width:0!important;
+}
+html body #formModal .form-id-row .id-label-row,
+html body #formModal .form-id-row .copies-field > label{
+  height:1.26rem!important;
+  min-height:1.26rem!important;
+  display:flex!important;
+  align-items:center!important;
+  margin:0!important;
+}
+html body #formModal .form-id-row .ff:has(#fldCode),
+html body #formModal .form-id-row .copies-field{
+  gap:.26rem!important;
+}
+html body #formModal .grail-ff{
+  justify-content:flex-start!important;
+  padding-top:calc(1.26rem + .26rem)!important;
+}
+html body #formModal .grail-toggle.grail-field,
+html body #formModal #fldCode,
+html body #formModal .copies-stepper,
+html body #formModal .copies-stepper input,
+html body #formModal .copy-step-btn{
+  height:2.45rem!important;
+  min-height:2.45rem!important;
+}
+html body #formModal .grail-toggle.grail-field{
+  margin:0!important;
+  align-self:stretch!important;
+  display:flex!important;
+  align-items:center!important;
+  padding:.42rem .68rem!important;
+}
+html body #formModal .grail-toggle .grail-box{
+  width:16px!important;
+  height:16px!important;
+  flex:0 0 16px!important;
+  align-self:center!important;
+  margin:0!important;
+  transform:none!important;
+}
+html body #formModal .grail-copy{
+  height:16px!important;
+  min-height:16px!important;
+  display:flex!important;
+  align-items:center!important;
+  line-height:16px!important;
+}
+html body #formModal .copies-field{
+  align-items:flex-end!important;
+}
+html body #formModal .copies-field > label{
+  width:100%!important;
+  justify-content:flex-start!important;
+  text-align:left!important;
+}
+html body #formModal .copies-stepper{
+  margin-left:auto!important;
+  margin-right:0!important;
+}
+@media(max-width:980px){
+  html body #formModal .form-id-row{grid-template-columns:1fr!important;}
+  html body #formModal .grail-ff{padding-top:0!important;}
+  html body #formModal .copies-field{align-items:flex-start!important;}
+  html body #formModal .copies-stepper{margin-left:0!important;}
+}
+
+
+/* DEAD WAX EDIT FORM GRAIL LABEL + COPIES LABEL ALIGNMENT FIX — 2026-04-28
+   Adds a proper label above the Grail control and aligns Copies Owned label with its stepper box. */
+html body #formModal .form-id-row{align-items:start!important;}
+html body #formModal .grail-ff{padding-top:0!important;display:flex!important;flex-direction:column!important;justify-content:flex-start!important;gap:.26rem!important;}
+html body #formModal .grail-top-label,
+html body #formModal .copies-field > label,
+html body #formModal .form-id-row .id-label-row{height:1.26rem!important;min-height:1.26rem!important;display:flex!important;align-items:center!important;margin:0!important;}
+html body #formModal .grail-top-label{font-size:.72rem!important;font-weight:600!important;letter-spacing:.18em!important;text-transform:uppercase!important;color:var(--mt)!important;line-height:1!important;}
+html body #formModal .grail-toggle.grail-field{height:2.45rem!important;min-height:2.45rem!important;margin:0!important;align-self:stretch!important;display:flex!important;align-items:center!important;gap:.64rem!important;padding:.42rem .68rem!important;}
+html body #formModal .grail-toggle .grail-box{width:16px!important;height:16px!important;flex:0 0 16px!important;margin:0!important;transform:none!important;align-self:center!important;}
+html body #formModal .grail-copy{height:auto!important;min-height:16px!important;display:flex!important;align-items:center!important;line-height:16px!important;}
+html body #formModal .grail-copy .grail-help{line-height:16px!important;}
+html body #formModal .copies-field{display:flex!important;flex-direction:column!important;align-items:flex-end!important;gap:.26rem!important;}
+html body #formModal .copies-field > label{width:max-content!important;min-width:7.8rem!important;max-width:100%!important;margin-left:auto!important;margin-right:0!important;justify-content:flex-start!important;text-align:left!important;}
+html body #formModal .copies-stepper{margin-left:auto!important;margin-right:0!important;}
+@media(max-width:980px){html body #formModal .grail-ff{padding-top:0!important;}html body #formModal .copies-field{align-items:flex-start!important;}html body #formModal .copies-field > label{margin-left:0!important;min-width:0!important;}html body #formModal .copies-stepper{margin-left:0!important;}}
+
+
+/* DEAD WAX EDIT FORM LABEL CONSISTENCY FIX — 2026-04-28
+   Keep Grail and Copies labels identical to the standard form labels. */
+html body #formModal .form-id-row .grail-top-label,
+html body #formModal .form-id-row .copies-field > label{
+  font-size:.58rem!important;
+  font-weight:600!important;
+  letter-spacing:.14em!important;
+  text-transform:uppercase!important;
+  color:var(--m2)!important;
+  line-height:1!important;
+  height:1.26rem!important;
+  min-height:1.26rem!important;
+  display:flex!important;
+  align-items:center!important;
+  margin:0!important;
+}
+html body #formModal .form-id-row .grail-top-label{
+  width:max-content!important;
+  max-width:100%!important;
+  justify-content:flex-start!important;
+  text-align:left!important;
+}
+html body #formModal .form-id-row .copies-field{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-end!important;
+  gap:.26rem!important;
+}
+html body #formModal .form-id-row .copies-field > label{
+  width:7.2rem!important;
+  min-width:0!important;
+  max-width:100%!important;
+  margin-left:auto!important;
+  margin-right:0!important;
+  justify-content:flex-start!important;
+  text-align:left!important;
+}
+html body #formModal .form-id-row .copies-stepper{
+  width:7.2rem!important;
+  margin-left:auto!important;
+  margin-right:0!important;
+}
+@media(max-width:980px){
+  html body #formModal .form-id-row .copies-field{align-items:flex-start!important;}
+  html body #formModal .form-id-row .copies-field > label,
+  html body #formModal .form-id-row .copies-stepper{width:7.2rem!important;margin-left:0!important;}
+}
+
+
+/* DEAD WAX FILTER CHECKBOX ALIGNMENT PATCH — 2026-04-29 */
+.h2 .filter-check{align-self:flex-end!important;display:flex!important;flex-direction:column!important;gap:.16rem!important;justify-content:flex-start!important}
+.h2 .filter-check>label:first-child{margin:0!important;font-size:.55rem!important;font-weight:600!important;letter-spacing:.14em!important;text-transform:uppercase!important;color:var(--m2)!important;line-height:1.1!important}
+.h2 .filter-check .check-wrap{height:2.12rem!important;min-height:2.12rem!important;display:flex!important;align-items:center!important;gap:.52rem!important;padding:0 .72rem!important;background:var(--s1)!important;border:1px solid var(--bd)!important;border-radius:4px!important;color:var(--mt)!important;font-size:.72rem!important;font-weight:600!important;letter-spacing:.16em!important;text-transform:uppercase!important;line-height:1!important;white-space:nowrap!important}
+.h2 .filter-check .check-wrap input[type="checkbox"]{-webkit-appearance:none!important;appearance:none!important;width:16px!important;height:16px!important;flex:0 0 16px!important;margin:0!important;padding:0!important;border:1.5px solid rgba(240,195,79,.62)!important;border-radius:3px!important;background-color:rgba(11,9,6,.18)!important;box-shadow:inset 0 0 0 1px rgba(11,9,6,.15)!important;cursor:pointer!important;vertical-align:middle!important}
+.h2 .filter-check .check-wrap input[type="checkbox"]:checked{border-color:var(--gold)!important;background-color:var(--gold)!important;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.2 8.2l3 3.1 6.7-7.1' fill='none' stroke='%230b0906' stroke-width='2.1' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")!important;background-repeat:no-repeat!important;background-position:center!important;background-size:13px 13px!important}
+.h2 .filter-check .check-wrap:focus-within{border-color:var(--gd)!important;box-shadow:0 0 0 2px rgba(208,154,36,.08)!important}
+
+
+/* DEAD WAX FILTER CHECKBOX TYPOGRAPHY CONSISTENCY PATCH — 2026-04-29 */
+.h2 .filter-check{align-self:flex-end!important;justify-content:flex-start!important;min-width:0!important}
+.h2 .filter-check .check-wrap{height:2.12rem!important;min-height:2.12rem!important;display:flex!important;align-items:center!important;gap:.48rem!important;padding:.3rem .48rem!important;background:var(--s1)!important;border:1px solid var(--bd)!important;border-radius:4px!important;color:var(--cream)!important;font-family:'Jost',sans-serif!important;font-size:.76rem!important;font-weight:300!important;letter-spacing:0!important;text-transform:none!important;line-height:1.2!important;white-space:nowrap!important}
+.h2 .filter-check .check-wrap span{color:inherit!important;font:inherit!important;letter-spacing:inherit!important;text-transform:inherit!important}
+.h2 .filter-check .check-wrap input[type="checkbox"]{width:14px!important;height:14px!important;flex:0 0 14px!important;border-radius:3px!important;border:1.5px solid rgba(208,154,36,.72)!important;background-color:transparent!important;box-shadow:none!important}
+.h2 .filter-check .check-wrap input[type="checkbox"]:checked{border-color:var(--gold)!important;background-color:var(--gold)!important;background-size:12px 12px!important}
+
+
+/* DEAD WAX FILTER CHECKBOX FINAL BASELINE ALIGNMENT PATCH — 2026-04-29
+   Aligns checkbox filter groups to the same label + input baseline as normal filter fields. */
+.h2 .fg.filter-check{
+  align-self:flex-end!important;
+  justify-content:flex-start!important;
+  display:flex!important;
+  flex-direction:column!important;
+  gap:.16rem!important;
+  min-width:auto!important;
+  flex:0 0 auto!important;
+}
+.h2 .fg.filter-check > label:first-child:not(.check-wrap){
+  margin:0!important;
+  font-size:.55rem!important;
+  font-weight:600!important;
+  letter-spacing:.14em!important;
+  text-transform:uppercase!important;
+  color:var(--m2)!important;
+  line-height:1.2!important;
+}
+.h2 .fg.filter-check > .check-wrap{
+  margin:0!important;
+  height:2.08rem!important;
+  min-height:2.08rem!important;
+  max-height:2.08rem!important;
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:.48rem!important;
+  padding:.3rem .48rem!important;
+  background:var(--s1)!important;
+  border:1px solid var(--bd)!important;
+  border-radius:4px!important;
+  color:var(--cream)!important;
+  font-family:'Jost',sans-serif!important;
+  font-size:.76rem!important;
+  font-weight:300!important;
+  letter-spacing:0!important;
+  text-transform:none!important;
+  line-height:1.2!important;
+}
+.h2 .fg.filter-check > .check-wrap input[type="checkbox"]{
+  -webkit-appearance:none!important;
+  appearance:none!important;
+  width:14px!important;
+  height:14px!important;
+  flex:0 0 14px!important;
+  margin:0!important;
+  padding:0!important;
+  border-radius:3px!important;
+  border:1.5px solid rgba(208,154,36,.72)!important;
+  background-color:transparent!important;
+  box-shadow:none!important;
+  cursor:pointer!important;
+}
+.h2 .fg.filter-check > .check-wrap input[type="checkbox"]:checked{
+  border-color:var(--gold)!important;
+  background-color:var(--gold)!important;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.2 8.2l3 3.1 6.7-7.1' fill='none' stroke='%230b0906' stroke-width='2.1' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")!important;
+  background-repeat:no-repeat!important;
+  background-position:center!important;
+  background-size:12px 12px!important;
+}
+.h2 .fg.filter-check > .check-wrap span{
+  color:inherit!important;
+  font:inherit!important;
+  letter-spacing:inherit!important;
+  text-transform:inherit!important;
+}
+
+
+/* DEAD WAX FILTER DOUBLES + TWO-ROW LAYOUT PATCH — 2026-04-29
+   Adds a Doubles filter and gives the growing filter bar a calm two-row grid. */
+html body .h2.filter-drawer{
+  display:none!important;
+  grid-template-columns:minmax(72px,.55fr) minmax(128px,1fr) minmax(128px,1fr) minmax(128px,1fr) minmax(148px,1.05fr) minmax(128px,.82fr)!important;
+  gap:.58rem .62rem!important;
+  align-items:end!important;
+  overflow:visible!important;
+}
+html body .h2.filter-drawer.on{display:grid!important;}
+html body .h2.filter-drawer>.fg,
+html body .h2.filter-drawer>.fg.filter-check{
+  align-self:end!important;
+  justify-content:flex-start!important;
+  min-width:0!important;
+  max-width:none!important;
+  width:100%!important;
+}
+html body .h2.filter-drawer>.fg:first-child{max-width:72px!important;}
+html body .h2.filter-drawer>.fg label:first-child:not(.check-wrap){
+  height:auto!important;
+  min-height:0!important;
+  margin:0 0 .16rem!important;
+  display:block!important;
+  font-size:.55rem!important;
+  font-weight:600!important;
+  letter-spacing:.14em!important;
+  text-transform:uppercase!important;
+  color:var(--m2)!important;
+  line-height:1.1!important;
+}
+html body .h2.filter-drawer input,
+html body .h2.filter-drawer select,
+html body .h2.filter-drawer .check-wrap,
+html body .h2.filter-drawer .btn-clr{
+  height:2.12rem!important;
+  min-height:2.12rem!important;
+  max-height:2.12rem!important;
+  box-sizing:border-box!important;
+}
+html body .h2.filter-drawer .check-wrap{
+  width:100%!important;
+  margin:0!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:.48rem!important;
+  padding:.3rem .48rem!important;
+  background:var(--s1)!important;
+  border:1px solid var(--bd)!important;
+  border-radius:4px!important;
+  color:var(--cream)!important;
+  font-family:'Jost',sans-serif!important;
+  font-size:.76rem!important;
+  font-weight:300!important;
+  letter-spacing:0!important;
+  text-transform:none!important;
+  line-height:1.2!important;
+  white-space:nowrap!important;
+}
+html body .h2.filter-drawer .check-wrap span{
+  min-width:0!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  color:inherit!important;
+  font:inherit!important;
+  letter-spacing:inherit!important;
+  text-transform:inherit!important;
+}
+html body .h2.filter-drawer .check-wrap input[type="checkbox"]{
+  -webkit-appearance:none!important;
+  appearance:none!important;
+  width:14px!important;
+  height:14px!important;
+  flex:0 0 14px!important;
+  margin:0!important;
+  padding:0!important;
+  border-radius:3px!important;
+  border:1.5px solid rgba(208,154,36,.72)!important;
+  background-color:transparent!important;
+  box-shadow:none!important;
+  cursor:pointer!important;
+}
+html body .h2.filter-drawer .check-wrap input[type="checkbox"]:checked{
+  border-color:var(--gold)!important;
+  background-color:var(--gold)!important;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.2 8.2l3 3.1 6.7-7.1' fill='none' stroke='%230b0906' stroke-width='2.1' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")!important;
+  background-repeat:no-repeat!important;
+  background-position:center!important;
+  background-size:12px 12px!important;
+}
+html body .h2.filter-drawer .btn-clr{
+  align-self:end!important;
+  width:100%!important;
+  padding:.3rem .65rem!important;
+}
+@media(max-width:1180px){
+  html body .h2.filter-drawer{grid-template-columns:repeat(3,minmax(0,1fr))!important;}
+  html body .h2.filter-drawer>.fg:first-child{max-width:none!important;}
+}
+@media(max-width:720px){
+  html body .h2.filter-drawer{grid-template-columns:1fr!important;}
+}
+
+
+/* DEAD WAX FILTER CHECKBOX SQUARE RESTORE PATCH — 2026-04-29
+   Keep filter checkbox controls square after the two-row layout sizing rules. */
+html body .h2.filter-drawer input:not([type="checkbox"]),
+html body .h2.filter-drawer select,
+html body .h2.filter-drawer .check-wrap,
+html body .h2.filter-drawer .btn-clr{
+  height:2.12rem!important;
+  min-height:2.12rem!important;
+  max-height:2.12rem!important;
+  box-sizing:border-box!important;
+}
+html body .h2.filter-drawer .check-wrap input[type="checkbox"]{
+  inline-size:14px!important;
+  block-size:14px!important;
+  width:14px!important;
+  min-width:14px!important;
+  max-width:14px!important;
+  height:14px!important;
+  min-height:14px!important;
+  max-height:14px!important;
+  flex:0 0 14px!important;
+  aspect-ratio:1 / 1!important;
+  align-self:center!important;
+  -webkit-appearance:none!important;
+  appearance:none!important;
+  box-sizing:border-box!important;
+  padding:0!important;
+  margin:0!important;
+  border-radius:3px!important;
+  border:1.5px solid rgba(208,154,36,.72)!important;
+  background-color:transparent!important;
+  box-shadow:none!important;
+}
+html body .h2.filter-drawer .check-wrap input[type="checkbox"]:checked{
+  border-color:var(--gold)!important;
+  background-color:var(--gold)!important;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.2 8.2l3 3.1 6.7-7.1' fill='none' stroke='%230b0906' stroke-width='2.1' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")!important;
+  background-repeat:no-repeat!important;
+  background-position:center!important;
+  background-size:12px 12px!important;
+}
