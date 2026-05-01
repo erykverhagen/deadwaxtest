@@ -153,7 +153,6 @@
       @media(prefers-reduced-motion:reduce){html body .dw-platter::before{animation:none!important}html body .dw-deck-btn{transition:none!important}}
     `;
     document.head.appendChild(loginFix);
-    const loginFix = document.createElement('style');
     const d=document.createElement('div');
     d.id='dwAuth';
     d.className='dw-auth signin';
