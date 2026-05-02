@@ -273,6 +273,19 @@
 
       @media(prefers-reduced-motion:reduce){html body .dw-platter::before,html body .dw-label{animation:none!important}html body .dw-tonearm,html body .dw-deck-btn{transition:none!important}}
     `;
+
+      const exactLogoSpecFix = document.createElement('style');
+      exactLogoSpecFix.textContent = `
+        html body .dw-platter{background:none!important;box-shadow:none!important}
+        html body .dw-platter::before,
+        html body .dw-platter::after,
+        html body .dw-record{display:none!important;content:none!important}
+        html body .dw-label{position:absolute!important;inset:0!important;border:0!important;border-radius:50%!important;background:none!important;box-shadow:0 34px 110px rgba(0,0,0,.42)!important;animation:dwRecordSpin 28s linear infinite!important;z-index:3!important}
+        html body .dw-label .dw-login-mark{width:100%!important;height:100%!important;display:block!important;opacity:1!important;filter:none!important}
+        html body .dw-spindle{z-index:5!important}
+      `;
+      document.head.appendChild(exactLogoSpecFix);
+
     document.head.appendChild(loginFix);
     const d=document.createElement('div');
     d.id='dwAuth';
