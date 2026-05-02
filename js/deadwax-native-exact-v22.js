@@ -22,6 +22,8 @@
     currentId: null,
     random: false,
     cfIndex: 0,
+    cfActiveId: null,
+    cfWheelLocked: false,
     collapsed: new Set(),
     filters: {global:'', code:'', artist:'', last:'', first:'', album:'', genre:'', listened:false, doubles:false, rating:'', lastListened:'', grail:false}
   };
@@ -448,19 +450,33 @@
     $('#listBody').innerHTML = html || `<div class="no-res"><h3>No records found</h3></div>`;
   }
 
+  function flowEntries(){
+    const entries=[];
+    groupRecords(state.filtered).forEach(([label,rs])=>{
+      rs.forEach(record=>entries.push({label,record}));
+    });
+    return entries;
+  }
+
   function renderFlow(){
-    const arr=state.filtered;
+    const entries=flowEntries();
     const stage=$('#cfStage'), meta=$('#cfMeta');
-    if(!arr.length){ stage.innerHTML='<div class="cf-empty-state">No records found</div>'; meta.innerHTML=''; return; }
-    state.cfIndex=Math.max(0,Math.min(state.cfIndex,arr.length-1));
+    if(!entries.length){ stage.innerHTML='<div class="cf-empty-state">No records found</div>'; meta.innerHTML=''; state.cfIndex=0; state.cfActiveId=null; return; }
+    if(state.cfActiveId){
+      const activeIdx=entries.findIndex(e=>e.record.id===state.cfActiveId);
+      if(activeIdx>=0) state.cfIndex=activeIdx;
+    }
+    state.cfIndex=Math.max(0,Math.min(state.cfIndex,entries.length-1));
+    state.cfActiveId=entries[state.cfIndex].record.id;
     const pieces=[];
     for(let off=-4; off<=4; off++){
-      const idx=state.cfIndex+off; if(idx<0||idx>=arr.length) continue;
-      pieces.push(renderFlowCard(arr[idx],idx,off));
+      const idx=state.cfIndex+off; if(idx<0||idx>=entries.length) continue;
+      pieces.push(renderFlowCard(entries[idx].record,idx,off));
     }
     stage.innerHTML=`<div class="cf-stage-rail"></div>${pieces.join('')}`;
-    const r=arr[state.cfIndex];
-    meta.innerHTML=`<div class="flow-meta-main"><div class="flow-meta-code">${esc(recordCode(r))}</div><div class="flow-meta-artist">${esc(r.artist)}</div><div class="flow-meta-album">${esc(r.album)}</div><div class="flow-meta-tags">${tag(r.genre,'g')}${collectionNames(r).slice(0,3).map(x=>tag(x)).join('')}</div><div class="flow-hint">Use arrow keys, wheel or click covers</div></div>`;
+    const entry=entries[state.cfIndex];
+    const r=entry.record;
+    meta.innerHTML=`<div class="flow-meta-main"><div class="flow-section-line"><span class="flow-section-pill">${esc(entry.label)}</span></div><div class="flow-meta-code">${esc(recordCode(r))}</div><div class="flow-meta-artist">${esc(r.artist)}</div><div class="flow-meta-album">${esc(r.album)}</div><div class="flow-meta-tags">${tag(r.genre,'g')}${collectionNames(r).slice(0,3).map(x=>tag(x)).join('')}</div><div class="flow-hint">Use arrow keys, wheel or click covers</div></div>`;
   }
 
   function renderFlowCard(r,idx,off){
@@ -470,9 +486,11 @@
   }
 
   function cfClick(id){
-    const idx=state.filtered.findIndex(r=>r.id===id);
-    if(idx===state.cfIndex) openModal(idx);
-    else { state.cfIndex=idx; renderFlow(); }
+    const entries=flowEntries();
+    const idx=entries.findIndex(e=>e.record.id===id);
+    if(idx<0) return;
+    if(idx===state.cfIndex) openRecordById(id);
+    else { state.cfIndex=idx; state.cfActiveId=id; renderFlow(); }
   }
   window.cfClick=cfClick;
 
@@ -803,11 +821,11 @@
   }
   window.deleteCurrent=deleteCurrent;
 
-  function setView(v){ state.view=v; render(); }
+  function setView(v){ state.view=v; if(v==='flow' && state.filtered[state.cfIndex]) state.cfActiveId=state.filtered[state.cfIndex].id; render(); }
   window.setView=setView;
-  function setGroup(v){ state.group=v; render(); }
+  function setGroup(v){ state.group=v; state.cfIndex=0; state.cfActiveId=null; render(); }
   window.setGroup=setGroup;
-  function setSecondaryGroup(v){ state.secondary=v; render(); }
+  function setSecondaryGroup(v){ state.secondary=v; state.cfIndex=0; state.cfActiveId=null; render(); }
   window.setSecondaryGroup=setSecondaryGroup;
   function syncGroupControls(){ updateButtons(); }
   window.syncGroupControls=syncGroupControls;
@@ -1016,8 +1034,24 @@
     $('#fOv')?.addEventListener('click',e=>{ if(e.target.id==='fOv') closeForm(); });
     $('#sOv')?.addEventListener('click',e=>{ if(e.target.id==='sOv') closeSett(); });
     $('#addDiscBtn')?.addEventListener('click',addDisc);
-    $('#cfStage')?.addEventListener('wheel',e=>{ if(state.view!=='flow') return; e.preventDefault(); state.cfIndex += e.deltaY>0?1:-1; state.cfIndex=Math.max(0,Math.min(state.cfIndex,state.filtered.length-1)); renderFlow(); }, {passive:false});
-    document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeSf(); closeUserMenu(); } if(state.view==='flow' && (e.key==='ArrowRight'||e.key==='ArrowLeft')){ state.cfIndex += e.key==='ArrowRight'?1:-1; state.cfIndex=Math.max(0,Math.min(state.cfIndex,state.filtered.length-1)); renderFlow(); } });
+    function moveFlow(dir){
+      const entries=flowEntries();
+      if(!entries.length) return;
+      state.cfIndex=Math.max(0,Math.min(state.cfIndex + dir, entries.length-1));
+      state.cfActiveId=entries[state.cfIndex]?.record?.id || null;
+      renderFlow();
+    }
+    $('#cfStage')?.addEventListener('wheel',e=>{
+      if(state.view!=='flow') return;
+      e.preventDefault();
+      e.stopPropagation();
+      const axis=Math.abs(e.deltaX)>Math.abs(e.deltaY)?e.deltaX:e.deltaY;
+      if(Math.abs(axis)<3 || state.cfWheelLocked) return;
+      state.cfWheelLocked=true;
+      moveFlow(axis>0?1:-1);
+      window.setTimeout(()=>{ state.cfWheelLocked=false; }, 115);
+    }, {passive:false});
+    document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeSf(); closeUserMenu(); } if(state.view==='flow' && (e.key==='ArrowRight'||e.key==='ArrowLeft')){ e.preventDefault(); moveFlow(e.key==='ArrowRight'?1:-1); } });
     new ResizeObserver(updateHdrH).observe($('#hdr'));
   }
 
