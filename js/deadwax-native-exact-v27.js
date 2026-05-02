@@ -109,7 +109,7 @@
         <radialGradient id="g-body-login" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#e8b840"/><stop offset="40%" stop-color="#c8901e"/><stop offset="75%" stop-color="#a87018"/><stop offset="100%" stop-color="#7a5010"/></radialGradient>
         <radialGradient id="g-dwax-login" cx="42%" cy="38%" r="60%"><stop offset="0%" stop-color="#f0cc60" stop-opacity="0.15"/><stop offset="100%" stop-color="#8a6010" stop-opacity="0.3"/></radialGradient>
         <radialGradient id="g-lbl-login" cx="36%" cy="34%" r="62%"><stop offset="0%" stop-color="#f8dc70" stop-opacity="0.45"/><stop offset="55%" stop-color="#d09a24" stop-opacity="0"/><stop offset="100%" stop-color="#7a5010" stop-opacity="0.3"/></radialGradient>
-        <path id="m-arc-login" d="M140,140 m-64,0 a64,64 0 1,1 128,0 a64,64 0 1,1 -128,0"/>
+        <path id="m-arc-login" d="M140,140 m-77,0 a77,77 0 1,1 154,0 a77,77 0 1,1 -154,0"/>
       </defs>
       <circle cx="140" cy="140" r="139" fill="url(#g-body-login)" stroke="#6a4c10" stroke-width="0.8"/>
       <circle cx="140" cy="140" r="134" fill="none" stroke="#0b0906" stroke-width="1.9"/>
@@ -127,28 +127,28 @@
       <circle cx="140" cy="140" r="98" fill="none" stroke="#0b0906" stroke-width="1.6"/>
       <circle cx="140" cy="140" r="95" fill="none" stroke="#986614" stroke-width="0.7"/>
       <circle cx="140" cy="140" r="92" fill="none" stroke="#0b0906" stroke-width="1.6"/>
-      <circle cx="140" cy="140" r="89" fill="none" stroke="#906212" stroke-width="0.7"/>
-      <circle cx="140" cy="140" r="86" fill="none" stroke="#0b0906" stroke-width="1.5"/>
-      <circle cx="140" cy="140" r="83" fill="none" stroke="#886010" stroke-width="0.7"/>
-      <circle cx="140" cy="140" r="82" fill="none" stroke="#0b0906" stroke-width="1.2"/>
-      <circle cx="140" cy="140" r="80" fill="none" stroke="#806010" stroke-width="0.6"/>
-      <circle cx="140" cy="140" r="78" fill="none" stroke="#0b0906" stroke-width="0.9"/>
-      <circle cx="140" cy="140" r="76" fill="none" stroke="#786010" stroke-width="0.4"/>
-      <circle cx="140" cy="140" r="74" fill="#c8880c"/>
-      <circle cx="140" cy="140" r="74" fill="url(#g-dwax-login)"/>
-      <circle cx="140" cy="140" r="74" fill="none" stroke="#7a5a10" stroke-width="0.8"/>
-      <circle cx="140" cy="140" r="54" fill="none" stroke="#7a5a10" stroke-width="0.5"/>
-      <text font-family="Jost,sans-serif" font-size="4.1" fill="#3a2a08" letter-spacing="1.55" font-weight="400" opacity="0.52">
+      <circle cx="140" cy="140" r="96" fill="none" stroke="#906212" stroke-width="0.7"/>
+      <circle cx="140" cy="140" r="93" fill="none" stroke="#0b0906" stroke-width="1.5"/>
+      <circle cx="140" cy="140" r="90" fill="none" stroke="#886010" stroke-width="0.7"/>
+      <circle cx="140" cy="140" r="89" fill="none" stroke="#0b0906" stroke-width="1.2"/>
+      <circle cx="140" cy="140" r="87" fill="none" stroke="#806010" stroke-width="0.6"/>
+      <circle cx="140" cy="140" r="85" fill="none" stroke="#0b0906" stroke-width="0.9"/>
+      <circle cx="140" cy="140" r="83" fill="none" stroke="#786010" stroke-width="0.4"/>
+      <circle cx="140" cy="140" r="82" fill="#c8880c"/>
+      <circle cx="140" cy="140" r="82" fill="url(#g-dwax-login)"/>
+      <circle cx="140" cy="140" r="82" fill="none" stroke="#7a5a10" stroke-width="0.8"/>
+      <circle cx="140" cy="140" r="68" fill="none" stroke="#7a5a10" stroke-width="0.5"/>
+      <text font-family="Jost,sans-serif" font-size="4.0" fill="#3a2a08" letter-spacing="1.2" font-weight="400" opacity="0.52">
         <textPath href="#m-arc-login" startOffset="0%">Dead Wax was made in honor of dad · so his collection may live for generations</textPath>
       </text>
-      <circle cx="141" cy="141" r="52" fill="#5a3c0a" opacity="0.5"/>
-      <circle cx="140" cy="140" r="52" fill="#d09a24"/>
-      <circle cx="140" cy="140" r="52" fill="url(#g-lbl-login)"/>
-      <circle cx="140" cy="140" r="52" fill="none" stroke="#a87218" stroke-width="0.9"/>
-      <circle cx="140" cy="140" r="47" fill="none" stroke="#b8861e" stroke-width="0.5" opacity="0.5"/>
-      <circle cx="140" cy="140" r="44" fill="none" stroke="#b8861e" stroke-width="0.3" opacity="0.3"/>
-      <text x="140" y="151" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="40" font-weight="600" fill="#0b0906" letter-spacing="3">DW</text>
-      <circle cx="140" cy="140" r="5" fill="#0b0906" stroke="#6a4c10" stroke-width="0.6"/>
+      <circle cx="141" cy="141" r="66" fill="#5a3c0a" opacity="0.5"/>
+      <circle cx="140" cy="140" r="66" fill="#d09a24"/>
+      <circle cx="140" cy="140" r="66" fill="url(#g-lbl-login)"/>
+      <circle cx="140" cy="140" r="66" fill="none" stroke="#a87218" stroke-width="0.9"/>
+      <circle cx="140" cy="140" r="59" fill="none" stroke="#b8861e" stroke-width="0.5" opacity="0.5"/>
+      <circle cx="140" cy="140" r="55" fill="none" stroke="#b8861e" stroke-width="0.3" opacity="0.3"/>
+      <text x="140" y="151" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="50" font-weight="600" fill="#0b0906" letter-spacing="3">DW</text>
+      <circle cx="140" cy="140" r="5.5" fill="#0b0906" stroke="#6a4c10" stroke-width="0.6"/>
     </svg>`;
   }
 
@@ -340,9 +340,9 @@
         html body .dw-auth-copy,
         html body .dw-auth-note{display:none!important}
         html body .dw-deck-btn{min-height:3rem!important}
-        html body .dw-label{inset:26%!important;box-shadow:0 0 0 10px rgba(11,9,6,.16),inset 0 2px 5px rgba(244,234,210,.32),0 10px 42px rgba(0,0,0,.28)!important}
-        html body .dw-label .dw-login-mark{width:96%!important;height:96%!important;display:block!important;opacity:.96!important;filter:drop-shadow(0 2px 4px rgba(0,0,0,.26))!important}
-        html body .dw-spindle{z-index:5!important;width:10px!important;height:10px!important}
+        html body .dw-label{inset:35.5%!important;box-shadow:0 0 0 8px rgba(11,9,6,.18),inset 0 2px 5px rgba(244,234,210,.32),0 8px 36px rgba(0,0,0,.26)!important}
+        html body .dw-label .dw-login-mark{width:92%!important;height:92%!important;display:block!important;opacity:.96!important;filter:drop-shadow(0 2px 4px rgba(0,0,0,.26))!important}
+        html body .dw-spindle{z-index:5!important}
         html body .dw-turntable::after{left:calc(100% - min(440px,calc(100vw - 2.4rem)) - clamp(1.2rem,5vw,4.5rem) - 1.5rem)!important;opacity:.55!important}
         @media (max-width: 980px){
           html body .dw-auth-side{right:1.1rem!important;width:min(420px,calc(100vw - 2.2rem))!important}
