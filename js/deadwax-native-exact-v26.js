@@ -340,9 +340,9 @@
         html body .dw-auth-copy,
         html body .dw-auth-note{display:none!important}
         html body .dw-deck-btn{min-height:3rem!important}
-        html body .dw-label{inset:35.5%!important;box-shadow:0 0 0 8px rgba(11,9,6,.18),inset 0 2px 5px rgba(244,234,210,.32),0 8px 36px rgba(0,0,0,.26)!important}
-        html body .dw-label .dw-login-mark{width:92%!important;height:92%!important;display:block!important;opacity:.96!important;filter:drop-shadow(0 2px 4px rgba(0,0,0,.26))!important}
-        html body .dw-spindle{z-index:5!important}
+        html body .dw-label{inset:26%!important;box-shadow:0 0 0 10px rgba(11,9,6,.16),inset 0 2px 5px rgba(244,234,210,.32),0 10px 42px rgba(0,0,0,.28)!important}
+        html body .dw-label .dw-login-mark{width:96%!important;height:96%!important;display:block!important;opacity:.96!important;filter:drop-shadow(0 2px 4px rgba(0,0,0,.26))!important}
+        html body .dw-spindle{z-index:5!important;width:10px!important;height:10px!important}
         html body .dw-turntable::after{left:calc(100% - min(440px,calc(100vw - 2.4rem)) - clamp(1.2rem,5vw,4.5rem) - 1.5rem)!important;opacity:.55!important}
         @media (max-width: 980px){
           html body .dw-auth-side{right:1.1rem!important;width:min(420px,calc(100vw - 2.2rem))!important}
