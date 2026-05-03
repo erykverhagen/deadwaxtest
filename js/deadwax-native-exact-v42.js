@@ -103,6 +103,194 @@
     return `<svg class="dw-mark" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><radialGradient id="g${Math.random().toString(36).slice(2)}" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#e8b840"/><stop offset="60%" stop-color="#b07818"/><stop offset="100%" stop-color="#7a5010"/></radialGradient></defs><circle cx="32" cy="32" r="30" fill="#d09a24"/><circle cx="32" cy="32" r="25" fill="none" stroke="#0b0906" stroke-width="3"/><circle cx="32" cy="32" r="20" fill="none" stroke="#0b0906" stroke-width="2.5"/><circle cx="32" cy="32" r="13" fill="#d09a24" stroke="#7a5010" stroke-width="1"/><text x="32" y="38" text-anchor="middle" font-family="serif" font-size="14" font-weight="600" fill="#0b0906">DW</text></svg>`;
   }
 
+  function dwLoginMark(){
+    return `<svg class="dw-login-mark" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <radialGradient id="g-body-login" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#e8b840"/><stop offset="40%" stop-color="#c8901e"/><stop offset="75%" stop-color="#a87018"/><stop offset="100%" stop-color="#7a5010"/></radialGradient>
+        <radialGradient id="g-dwax-login" cx="42%" cy="38%" r="60%"><stop offset="0%" stop-color="#f0cc60" stop-opacity="0.12"/><stop offset="100%" stop-color="#8a6010" stop-opacity="0.26"/></radialGradient>
+        <radialGradient id="g-lbl-login" cx="36%" cy="34%" r="62%"><stop offset="0%" stop-color="#f8dc70" stop-opacity="0.45"/><stop offset="55%" stop-color="#d09a24" stop-opacity="0"/><stop offset="100%" stop-color="#7a5010" stop-opacity="0.3"/></radialGradient>
+        <filter id="groove-wobble-login" x="-4%" y="-4%" width="108%" height="108%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.012 0.022" numOctaves="1" seed="23" result="noise"/>
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="0.14" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+        <path id="m-arc-login" d="M140,140 m-48,0 a48,48 0 1,1 96,0 a48,48 0 1,1 -96,0"/>
+      </defs>
+      <circle cx="140" cy="140" r="139" fill="url(#g-body-login)" stroke="#6a4c10" stroke-width="0.8"/>
+      <!-- Groove field: 163 visible rings, Border Dark on Gold. -->
+      <g filter="url(#groove-wobble-login)">
+      <circle cx="140" cy="140" r="134.000" fill="none" stroke="#261b0a" stroke-width="1.000" opacity="0.80"/>
+      <circle cx="140" cy="140" r="133.532" fill="none" stroke="#d09a24" stroke-width="0.219" opacity="0.28"/>
+      <circle cx="140" cy="140" r="133.064" fill="none" stroke="#261b0a" stroke-width="0.994" opacity="0.80"/>
+      <circle cx="140" cy="140" r="132.596" fill="none" stroke="#d09a24" stroke-width="0.218" opacity="0.28"/>
+      <circle cx="140" cy="140" r="132.128" fill="none" stroke="#261b0a" stroke-width="0.987" opacity="0.80"/>
+      <circle cx="140" cy="140" r="131.660" fill="none" stroke="#d09a24" stroke-width="0.216" opacity="0.28"/>
+      <circle cx="140" cy="140" r="131.193" fill="none" stroke="#261b0a" stroke-width="0.981" opacity="0.79"/>
+      <circle cx="140" cy="140" r="130.725" fill="none" stroke="#d09a24" stroke-width="0.215" opacity="0.28"/>
+      <circle cx="140" cy="140" r="130.257" fill="none" stroke="#261b0a" stroke-width="0.974" opacity="0.79"/>
+      <circle cx="140" cy="140" r="129.789" fill="none" stroke="#d09a24" stroke-width="0.213" opacity="0.28"/>
+      <circle cx="140" cy="140" r="129.321" fill="none" stroke="#261b0a" stroke-width="0.968" opacity="0.79"/>
+      <circle cx="140" cy="140" r="128.853" fill="none" stroke="#d09a24" stroke-width="0.212" opacity="0.27"/>
+      <circle cx="140" cy="140" r="128.385" fill="none" stroke="#261b0a" stroke-width="0.961" opacity="0.79"/>
+      <circle cx="140" cy="140" r="127.917" fill="none" stroke="#d09a24" stroke-width="0.210" opacity="0.27"/>
+      <circle cx="140" cy="140" r="127.449" fill="none" stroke="#261b0a" stroke-width="0.955" opacity="0.78"/>
+      <circle cx="140" cy="140" r="126.981" fill="none" stroke="#d09a24" stroke-width="0.209" opacity="0.27"/>
+      <circle cx="140" cy="140" r="126.514" fill="none" stroke="#261b0a" stroke-width="0.949" opacity="0.78"/>
+      <circle cx="140" cy="140" r="126.046" fill="none" stroke="#d09a24" stroke-width="0.207" opacity="0.27"/>
+      <circle cx="140" cy="140" r="125.578" fill="none" stroke="#261b0a" stroke-width="0.942" opacity="0.78"/>
+      <circle cx="140" cy="140" r="125.110" fill="none" stroke="#d09a24" stroke-width="0.206" opacity="0.27"/>
+      <circle cx="140" cy="140" r="124.642" fill="none" stroke="#261b0a" stroke-width="0.936" opacity="0.78"/>
+      <circle cx="140" cy="140" r="124.174" fill="none" stroke="#d09a24" stroke-width="0.204" opacity="0.27"/>
+      <circle cx="140" cy="140" r="123.706" fill="none" stroke="#261b0a" stroke-width="0.929" opacity="0.78"/>
+      <circle cx="140" cy="140" r="123.238" fill="none" stroke="#d09a24" stroke-width="0.203" opacity="0.27"/>
+      <circle cx="140" cy="140" r="122.770" fill="none" stroke="#261b0a" stroke-width="0.923" opacity="0.77"/>
+      <circle cx="140" cy="140" r="122.302" fill="none" stroke="#d09a24" stroke-width="0.201" opacity="0.27"/>
+      <circle cx="140" cy="140" r="121.835" fill="none" stroke="#261b0a" stroke-width="0.917" opacity="0.77"/>
+      <circle cx="140" cy="140" r="121.367" fill="none" stroke="#d09a24" stroke-width="0.200" opacity="0.27"/>
+      <circle cx="140" cy="140" r="120.899" fill="none" stroke="#261b0a" stroke-width="0.910" opacity="0.77"/>
+      <circle cx="140" cy="140" r="120.431" fill="none" stroke="#d09a24" stroke-width="0.199" opacity="0.27"/>
+      <circle cx="140" cy="140" r="119.963" fill="none" stroke="#261b0a" stroke-width="0.904" opacity="0.77"/>
+      <circle cx="140" cy="140" r="119.495" fill="none" stroke="#d09a24" stroke-width="0.197" opacity="0.26"/>
+      <circle cx="140" cy="140" r="119.027" fill="none" stroke="#261b0a" stroke-width="0.897" opacity="0.76"/>
+      <circle cx="140" cy="140" r="118.559" fill="none" stroke="#d09a24" stroke-width="0.196" opacity="0.26"/>
+      <circle cx="140" cy="140" r="118.091" fill="none" stroke="#261b0a" stroke-width="0.891" opacity="0.76"/>
+      <circle cx="140" cy="140" r="117.623" fill="none" stroke="#d09a24" stroke-width="0.194" opacity="0.26"/>
+      <circle cx="140" cy="140" r="117.156" fill="none" stroke="#261b0a" stroke-width="0.884" opacity="0.76"/>
+      <circle cx="140" cy="140" r="116.688" fill="none" stroke="#d09a24" stroke-width="0.193" opacity="0.26"/>
+      <circle cx="140" cy="140" r="116.220" fill="none" stroke="#261b0a" stroke-width="0.878" opacity="0.76"/>
+      <circle cx="140" cy="140" r="115.752" fill="none" stroke="#d09a24" stroke-width="0.191" opacity="0.26"/>
+      <circle cx="140" cy="140" r="115.284" fill="none" stroke="#261b0a" stroke-width="0.872" opacity="0.76"/>
+      <circle cx="140" cy="140" r="114.816" fill="none" stroke="#d09a24" stroke-width="0.190" opacity="0.26"/>
+      <circle cx="140" cy="140" r="114.348" fill="none" stroke="#261b0a" stroke-width="0.865" opacity="0.75"/>
+      <circle cx="140" cy="140" r="113.880" fill="none" stroke="#d09a24" stroke-width="0.188" opacity="0.26"/>
+      <circle cx="140" cy="140" r="113.412" fill="none" stroke="#261b0a" stroke-width="0.859" opacity="0.75"/>
+      <circle cx="140" cy="140" r="112.944" fill="none" stroke="#d09a24" stroke-width="0.187" opacity="0.26"/>
+      <circle cx="140" cy="140" r="112.477" fill="none" stroke="#261b0a" stroke-width="0.852" opacity="0.75"/>
+      <circle cx="140" cy="140" r="112.009" fill="none" stroke="#d09a24" stroke-width="0.185" opacity="0.26"/>
+      <circle cx="140" cy="140" r="111.541" fill="none" stroke="#261b0a" stroke-width="0.846" opacity="0.75"/>
+      <circle cx="140" cy="140" r="111.073" fill="none" stroke="#d09a24" stroke-width="0.184" opacity="0.26"/>
+      <circle cx="140" cy="140" r="110.605" fill="none" stroke="#261b0a" stroke-width="0.840" opacity="0.74"/>
+      <circle cx="140" cy="140" r="110.137" fill="none" stroke="#d09a24" stroke-width="0.182" opacity="0.25"/>
+      <circle cx="140" cy="140" r="109.669" fill="none" stroke="#261b0a" stroke-width="0.833" opacity="0.74"/>
+      <circle cx="140" cy="140" r="109.201" fill="none" stroke="#d09a24" stroke-width="0.181" opacity="0.25"/>
+      <circle cx="140" cy="140" r="108.733" fill="none" stroke="#261b0a" stroke-width="0.827" opacity="0.74"/>
+      <circle cx="140" cy="140" r="108.265" fill="none" stroke="#d09a24" stroke-width="0.179" opacity="0.25"/>
+      <circle cx="140" cy="140" r="107.798" fill="none" stroke="#261b0a" stroke-width="0.820" opacity="0.74"/>
+      <circle cx="140" cy="140" r="107.330" fill="none" stroke="#d09a24" stroke-width="0.178" opacity="0.25"/>
+      <circle cx="140" cy="140" r="106.862" fill="none" stroke="#261b0a" stroke-width="0.814" opacity="0.74"/>
+      <circle cx="140" cy="140" r="106.394" fill="none" stroke="#d09a24" stroke-width="0.176" opacity="0.25"/>
+      <circle cx="140" cy="140" r="105.926" fill="none" stroke="#261b0a" stroke-width="0.807" opacity="0.73"/>
+      <circle cx="140" cy="140" r="105.458" fill="none" stroke="#d09a24" stroke-width="0.175" opacity="0.25"/>
+      <circle cx="140" cy="140" r="104.990" fill="none" stroke="#261b0a" stroke-width="0.801" opacity="0.73"/>
+      <circle cx="140" cy="140" r="104.522" fill="none" stroke="#d09a24" stroke-width="0.173" opacity="0.25"/>
+      <circle cx="140" cy="140" r="104.054" fill="none" stroke="#261b0a" stroke-width="0.795" opacity="0.73"/>
+      <circle cx="140" cy="140" r="103.586" fill="none" stroke="#d09a24" stroke-width="0.172" opacity="0.25"/>
+      <circle cx="140" cy="140" r="103.119" fill="none" stroke="#261b0a" stroke-width="0.788" opacity="0.73"/>
+      <circle cx="140" cy="140" r="102.651" fill="none" stroke="#d09a24" stroke-width="0.170" opacity="0.25"/>
+      <circle cx="140" cy="140" r="102.183" fill="none" stroke="#261b0a" stroke-width="0.782" opacity="0.72"/>
+      <circle cx="140" cy="140" r="101.715" fill="none" stroke="#d09a24" stroke-width="0.169" opacity="0.25"/>
+      <circle cx="140" cy="140" r="101.247" fill="none" stroke="#261b0a" stroke-width="0.775" opacity="0.72"/>
+      <circle cx="140" cy="140" r="100.779" fill="none" stroke="#d09a24" stroke-width="0.167" opacity="0.24"/>
+      <circle cx="140" cy="140" r="100.311" fill="none" stroke="#261b0a" stroke-width="0.769" opacity="0.72"/>
+      <circle cx="140" cy="140" r="99.843" fill="none" stroke="#d09a24" stroke-width="0.166" opacity="0.24"/>
+      <circle cx="140" cy="140" r="99.375" fill="none" stroke="#261b0a" stroke-width="0.762" opacity="0.72"/>
+      <circle cx="140" cy="140" r="98.907" fill="none" stroke="#d09a24" stroke-width="0.164" opacity="0.24"/>
+      <circle cx="140" cy="140" r="98.440" fill="none" stroke="#261b0a" stroke-width="0.756" opacity="0.72"/>
+      <circle cx="140" cy="140" r="97.972" fill="none" stroke="#d09a24" stroke-width="0.163" opacity="0.24"/>
+      <circle cx="140" cy="140" r="97.504" fill="none" stroke="#261b0a" stroke-width="0.750" opacity="0.71"/>
+      <circle cx="140" cy="140" r="97.036" fill="none" stroke="#d09a24" stroke-width="0.161" opacity="0.24"/>
+      <circle cx="140" cy="140" r="96.568" fill="none" stroke="#261b0a" stroke-width="0.743" opacity="0.71"/>
+      <circle cx="140" cy="140" r="96.100" fill="none" stroke="#d09a24" stroke-width="0.160" opacity="0.24"/>
+      <circle cx="140" cy="140" r="95.632" fill="none" stroke="#261b0a" stroke-width="0.737" opacity="0.71"/>
+      <circle cx="140" cy="140" r="95.164" fill="none" stroke="#d09a24" stroke-width="0.159" opacity="0.24"/>
+      <circle cx="140" cy="140" r="94.696" fill="none" stroke="#261b0a" stroke-width="0.730" opacity="0.71"/>
+      <circle cx="140" cy="140" r="94.228" fill="none" stroke="#d09a24" stroke-width="0.157" opacity="0.24"/>
+      <circle cx="140" cy="140" r="93.760" fill="none" stroke="#261b0a" stroke-width="0.724" opacity="0.70"/>
+      <circle cx="140" cy="140" r="93.293" fill="none" stroke="#d09a24" stroke-width="0.156" opacity="0.24"/>
+      <circle cx="140" cy="140" r="92.825" fill="none" stroke="#261b0a" stroke-width="0.718" opacity="0.70"/>
+      <circle cx="140" cy="140" r="92.357" fill="none" stroke="#d09a24" stroke-width="0.154" opacity="0.24"/>
+      <circle cx="140" cy="140" r="91.889" fill="none" stroke="#261b0a" stroke-width="0.711" opacity="0.70"/>
+      <circle cx="140" cy="140" r="91.421" fill="none" stroke="#d09a24" stroke-width="0.153" opacity="0.24"/>
+      <circle cx="140" cy="140" r="90.953" fill="none" stroke="#261b0a" stroke-width="0.705" opacity="0.70"/>
+      <circle cx="140" cy="140" r="90.485" fill="none" stroke="#d09a24" stroke-width="0.151" opacity="0.23"/>
+      <circle cx="140" cy="140" r="90.017" fill="none" stroke="#261b0a" stroke-width="0.698" opacity="0.70"/>
+      <circle cx="140" cy="140" r="89.549" fill="none" stroke="#d09a24" stroke-width="0.150" opacity="0.23"/>
+      <circle cx="140" cy="140" r="89.081" fill="none" stroke="#261b0a" stroke-width="0.692" opacity="0.69"/>
+      <circle cx="140" cy="140" r="88.614" fill="none" stroke="#d09a24" stroke-width="0.148" opacity="0.23"/>
+      <circle cx="140" cy="140" r="88.146" fill="none" stroke="#261b0a" stroke-width="0.685" opacity="0.69"/>
+      <circle cx="140" cy="140" r="87.678" fill="none" stroke="#d09a24" stroke-width="0.147" opacity="0.23"/>
+      <circle cx="140" cy="140" r="87.210" fill="none" stroke="#261b0a" stroke-width="0.679" opacity="0.69"/>
+      <circle cx="140" cy="140" r="86.742" fill="none" stroke="#d09a24" stroke-width="0.145" opacity="0.23"/>
+      <circle cx="140" cy="140" r="86.274" fill="none" stroke="#261b0a" stroke-width="0.673" opacity="0.69"/>
+      <circle cx="140" cy="140" r="85.806" fill="none" stroke="#d09a24" stroke-width="0.144" opacity="0.23"/>
+      <circle cx="140" cy="140" r="85.338" fill="none" stroke="#261b0a" stroke-width="0.666" opacity="0.68"/>
+      <circle cx="140" cy="140" r="84.870" fill="none" stroke="#d09a24" stroke-width="0.142" opacity="0.23"/>
+      <circle cx="140" cy="140" r="84.402" fill="none" stroke="#261b0a" stroke-width="0.660" opacity="0.68"/>
+      <circle cx="140" cy="140" r="83.935" fill="none" stroke="#d09a24" stroke-width="0.141" opacity="0.23"/>
+      <circle cx="140" cy="140" r="83.467" fill="none" stroke="#261b0a" stroke-width="0.653" opacity="0.68"/>
+      <circle cx="140" cy="140" r="82.999" fill="none" stroke="#d09a24" stroke-width="0.139" opacity="0.23"/>
+      <circle cx="140" cy="140" r="82.531" fill="none" stroke="#261b0a" stroke-width="0.647" opacity="0.68"/>
+      <circle cx="140" cy="140" r="82.063" fill="none" stroke="#d09a24" stroke-width="0.138" opacity="0.23"/>
+      <circle cx="140" cy="140" r="81.595" fill="none" stroke="#261b0a" stroke-width="0.640" opacity="0.68"/>
+      <circle cx="140" cy="140" r="81.127" fill="none" stroke="#d09a24" stroke-width="0.136" opacity="0.22"/>
+      <circle cx="140" cy="140" r="80.659" fill="none" stroke="#261b0a" stroke-width="0.634" opacity="0.67"/>
+      <circle cx="140" cy="140" r="80.191" fill="none" stroke="#d09a24" stroke-width="0.135" opacity="0.22"/>
+      <circle cx="140" cy="140" r="79.723" fill="none" stroke="#261b0a" stroke-width="0.628" opacity="0.67"/>
+      <circle cx="140" cy="140" r="79.256" fill="none" stroke="#d09a24" stroke-width="0.133" opacity="0.22"/>
+      <circle cx="140" cy="140" r="78.788" fill="none" stroke="#261b0a" stroke-width="0.621" opacity="0.67"/>
+      <circle cx="140" cy="140" r="78.320" fill="none" stroke="#d09a24" stroke-width="0.132" opacity="0.22"/>
+      <circle cx="140" cy="140" r="77.852" fill="none" stroke="#261b0a" stroke-width="0.615" opacity="0.67"/>
+      <circle cx="140" cy="140" r="77.384" fill="none" stroke="#d09a24" stroke-width="0.130" opacity="0.22"/>
+      <circle cx="140" cy="140" r="76.916" fill="none" stroke="#261b0a" stroke-width="0.608" opacity="0.66"/>
+      <circle cx="140" cy="140" r="76.448" fill="none" stroke="#d09a24" stroke-width="0.129" opacity="0.22"/>
+      <circle cx="140" cy="140" r="75.980" fill="none" stroke="#261b0a" stroke-width="0.602" opacity="0.66"/>
+      <circle cx="140" cy="140" r="75.512" fill="none" stroke="#d09a24" stroke-width="0.127" opacity="0.22"/>
+      <circle cx="140" cy="140" r="75.044" fill="none" stroke="#261b0a" stroke-width="0.596" opacity="0.66"/>
+      <circle cx="140" cy="140" r="74.577" fill="none" stroke="#d09a24" stroke-width="0.126" opacity="0.22"/>
+      <circle cx="140" cy="140" r="74.109" fill="none" stroke="#261b0a" stroke-width="0.589" opacity="0.66"/>
+      <circle cx="140" cy="140" r="73.641" fill="none" stroke="#d09a24" stroke-width="0.124" opacity="0.22"/>
+      <circle cx="140" cy="140" r="73.173" fill="none" stroke="#261b0a" stroke-width="0.583" opacity="0.66"/>
+      <circle cx="140" cy="140" r="72.705" fill="none" stroke="#d09a24" stroke-width="0.123" opacity="0.22"/>
+      <circle cx="140" cy="140" r="72.237" fill="none" stroke="#261b0a" stroke-width="0.576" opacity="0.65"/>
+      <circle cx="140" cy="140" r="71.769" fill="none" stroke="#d09a24" stroke-width="0.121" opacity="0.21"/>
+      <circle cx="140" cy="140" r="71.301" fill="none" stroke="#261b0a" stroke-width="0.570" opacity="0.65"/>
+      <circle cx="140" cy="140" r="70.833" fill="none" stroke="#d09a24" stroke-width="0.120" opacity="0.21"/>
+      <circle cx="140" cy="140" r="70.365" fill="none" stroke="#261b0a" stroke-width="0.563" opacity="0.65"/>
+      <circle cx="140" cy="140" r="69.898" fill="none" stroke="#d09a24" stroke-width="0.119" opacity="0.21"/>
+      <circle cx="140" cy="140" r="69.430" fill="none" stroke="#261b0a" stroke-width="0.557" opacity="0.65"/>
+      <circle cx="140" cy="140" r="68.962" fill="none" stroke="#d09a24" stroke-width="0.117" opacity="0.21"/>
+      <circle cx="140" cy="140" r="68.494" fill="none" stroke="#261b0a" stroke-width="0.551" opacity="0.64"/>
+      <circle cx="140" cy="140" r="68.026" fill="none" stroke="#d09a24" stroke-width="0.116" opacity="0.21"/>
+      <circle cx="140" cy="140" r="67.558" fill="none" stroke="#261b0a" stroke-width="0.544" opacity="0.64"/>
+      <circle cx="140" cy="140" r="67.090" fill="none" stroke="#d09a24" stroke-width="0.114" opacity="0.21"/>
+      <circle cx="140" cy="140" r="66.622" fill="none" stroke="#261b0a" stroke-width="0.538" opacity="0.64"/>
+      <circle cx="140" cy="140" r="66.154" fill="none" stroke="#d09a24" stroke-width="0.113" opacity="0.21"/>
+      <circle cx="140" cy="140" r="65.686" fill="none" stroke="#261b0a" stroke-width="0.531" opacity="0.64"/>
+      <circle cx="140" cy="140" r="65.219" fill="none" stroke="#d09a24" stroke-width="0.111" opacity="0.21"/>
+      <circle cx="140" cy="140" r="64.751" fill="none" stroke="#261b0a" stroke-width="0.525" opacity="0.64"/>
+      <circle cx="140" cy="140" r="64.283" fill="none" stroke="#d09a24" stroke-width="0.110" opacity="0.21"/>
+      <circle cx="140" cy="140" r="63.815" fill="none" stroke="#261b0a" stroke-width="0.519" opacity="0.63"/>
+      <circle cx="140" cy="140" r="63.347" fill="none" stroke="#d09a24" stroke-width="0.108" opacity="0.21"/>
+      <circle cx="140" cy="140" r="62.879" fill="none" stroke="#261b0a" stroke-width="0.512" opacity="0.63"/>
+      <circle cx="140" cy="140" r="62.411" fill="none" stroke="#d09a24" stroke-width="0.107" opacity="0.20"/>
+      <circle cx="140" cy="140" r="61.943" fill="none" stroke="#261b0a" stroke-width="0.506" opacity="0.63"/>
+      <circle cx="140" cy="140" r="61.475" fill="none" stroke="#d09a24" stroke-width="0.105" opacity="0.20"/>
+      <circle cx="140" cy="140" r="61.007" fill="none" stroke="#261b0a" stroke-width="0.499" opacity="0.63"/>
+      <circle cx="140" cy="140" r="60.540" fill="none" stroke="#d09a24" stroke-width="0.104" opacity="0.20"/>
+      <circle cx="140" cy="140" r="60.072" fill="none" stroke="#261b0a" stroke-width="0.493" opacity="0.62"/>
+      <circle cx="140" cy="140" r="59.604" fill="none" stroke="#d09a24" stroke-width="0.102" opacity="0.20"/>
+      <circle cx="140" cy="140" r="59.136" fill="none" stroke="#261b0a" stroke-width="0.486" opacity="0.62"/>
+      <circle cx="140" cy="140" r="58.668" fill="none" stroke="#d09a24" stroke-width="0.101" opacity="0.20"/>
+      <circle cx="140" cy="140" r="58.200" fill="none" stroke="#261b0a" stroke-width="0.480" opacity="0.62"/>
+      </g>
+      <circle cx="140" cy="140" r="56" fill="#c8880c"/><circle cx="140" cy="140" r="56" fill="url(#g-dwax-login)"/><circle cx="140" cy="140" r="56" fill="none" stroke="#7a5a10" stroke-width="0.62"/><circle cx="140" cy="140" r="38" fill="none" stroke="#7a5a10" stroke-width="0.42"/>
+      <text font-family="Jost,sans-serif" font-size="3.15" fill="#4a3509" letter-spacing=".85" font-weight="400" opacity="0.24"><textPath href="#m-arc-login" startOffset="0%">IN HONOR OF DAD · SO HIS COLLECTION MAY LIVE FOR GENERATIONS</textPath></text>
+      <circle cx="141" cy="141" r="35" fill="#5a3c0a" opacity="0.46"/><circle cx="140" cy="140" r="35" fill="#d09a24"/><circle cx="140" cy="140" r="35" fill="url(#g-lbl-login)"/><circle cx="140" cy="140" r="35" fill="none" stroke="#a87218" stroke-width="0.7"/>
+      <circle cx="140" cy="140" r="31" fill="none" stroke="#b8861e" stroke-width="0.34" opacity="0.42"/><circle cx="140" cy="140" r="27" fill="none" stroke="#b8861e" stroke-width="0.22" opacity="0.25"/>
+      <text x="140" y="148" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="28" font-weight="600" fill="#0b0906" letter-spacing="2.1">DW</text><circle cx="140" cy="140" r="4" fill="#0b0906" stroke="#6a4c10" stroke-width="0.42"/>
+    </svg>`;
+  }
+
+
   function ensureAuthShell(){
     if($('#dwAuth')) return;
     const css = document.createElement('style');
@@ -274,23 +462,61 @@
       @media(prefers-reduced-motion:reduce){html body .dw-platter::before,html body .dw-label{animation:none!important}html body .dw-tonearm,html body .dw-deck-btn{transition:none!important}}
     `;
 
-      const exactLogoSpecFix = document.createElement('style');
-      exactLogoSpecFix.textContent = `
-        html body .dw-platter{background:none!important;box-shadow:none!important}
-        html body .dw-platter::before,
-        html body .dw-platter::after,
-        html body .dw-record{display:none!important;content:none!important}
-        html body .dw-label{position:absolute!important;inset:0!important;border:0!important;border-radius:50%!important;background:none!important;box-shadow:0 34px 110px rgba(0,0,0,.42)!important;animation:dwRecordSpin 28s linear infinite!important;z-index:3!important}
-        html body .dw-label .dw-login-mark{width:100%!important;height:100%!important;display:block!important;opacity:1!important;filter:none!important}
+      const loginSketchFix = document.createElement('style');
+      loginSketchFix.textContent = `
+        html body .dw-tonearm,
+        html body .dw-deadwax-etch{display:none!important}
+        html body .dw-auth-side{position:absolute!important;right:clamp(1.2rem,5vw,4.5rem)!important;top:50%!important;transform:translateY(-50%)!important;z-index:8!important;width:min(440px,calc(100vw - 2.4rem))!important;display:flex!important;flex-direction:column!important;gap:1.2rem!important;align-items:stretch!important}
+        html body .dw-auth-intro,
+        html body .dw-auth-panel{position:relative!important;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;transform:none!important;width:100%!important;max-width:none!important}
+        html body .dw-auth-intro{padding-left:0!important;margin:0!important}
+        html body .dw-auth-intro-kicker,
+        html body .dw-auth-kicker{font-size:.64rem!important;letter-spacing:.18em!important;color:var(--gd)!important;text-transform:uppercase!important;font-weight:700!important}
+        html body .dw-auth-intro h1{margin:0 0 .5rem!important;font-size:clamp(3rem,5.2vw,5.6rem)!important;line-height:.88!important}
+        html body .dw-auth-intro p{margin:0!important;max-width:34ch!important;color:var(--mt)!important;font-size:clamp(.9rem,1.08vw,.98rem)!important;line-height:1.68!important}
+        html body .dw-auth-panel{padding:1.18rem 1.18rem 1.05rem!important;border-radius:20px!important;background:linear-gradient(180deg,rgba(18,13,7,.94),rgba(8,6,3,.98))!important;border:1px solid rgba(208,154,36,.24)!important;box-shadow:0 20px 52px rgba(0,0,0,.40), inset 0 1px 0 rgba(255,255,255,.04)!important}
+        html body .dw-auth-title,
+        html body .dw-auth-copy,
+        html body .dw-auth-note{display:none!important}
+        html body .dw-deck-btn{min-height:3rem!important}
+        html body .dw-label{inset:35.5%!important;box-shadow:0 0 0 8px rgba(11,9,6,.18),inset 0 2px 5px rgba(244,234,210,.32),0 8px 36px rgba(0,0,0,.26)!important}
+        html body .dw-label .dw-login-mark{width:92%!important;height:92%!important;display:block!important;opacity:.96!important;filter:drop-shadow(0 2px 4px rgba(0,0,0,.26))!important}
         html body .dw-spindle{z-index:5!important}
+        html body .dw-turntable::after{left:calc(100% - min(440px,calc(100vw - 2.4rem)) - clamp(1.2rem,5vw,4.5rem) - 1.5rem)!important;opacity:.55!important}
+        @media (max-width: 980px){
+          html body .dw-auth-side{right:1.1rem!important;width:min(420px,calc(100vw - 2.2rem))!important}
+          html body .dw-auth-intro h1{font-size:3.6rem!important}
+          html body .dw-auth-intro p{max-width:36ch!important}
+        }
+        @media (max-width: 720px){
+          html body .dw-auth-side{left:1rem!important;right:1rem!important;top:auto!important;bottom:1rem!important;transform:none!important;width:auto!important;gap:.95rem!important}
+          html body .dw-auth-intro{padding-right:0!important}
+          html body .dw-auth-intro h1{font-size:2.8rem!important}
+          html body .dw-auth-intro p{font-size:.82rem!important;max-width:none!important;line-height:1.56!important}
+          html body .dw-deck{left:clamp(-44rem,-67vw,-28rem)!important;top:32%!important;width:clamp(620px,110vw,860px)!important;height:clamp(620px,110vw,860px)!important}
+        }
       `;
-      document.head.appendChild(exactLogoSpecFix);
+      document.head.appendChild(loginSketchFix);
 
     document.head.appendChild(loginFix);
+
+    const v34LoginMarkFix = document.createElement('style');
+    v34LoginMarkFix.textContent = `
+      html body .dw-platter{background:none!important;box-shadow:0 34px 110px rgba(0,0,0,.42)!important}
+      html body .dw-platter::before,
+      html body .dw-platter::after,
+      html body .dw-record,
+      html body .dw-deadwax-etch{display:none!important;content:none!important}
+      html body .dw-label{position:absolute!important;inset:0!important;border:0!important;border-radius:50%!important;background:none!important;box-shadow:none!important;animation:dwRecordSpin 28s linear infinite!important;z-index:3!important}
+      html body .dw-label .dw-login-mark{width:100%!important;height:100%!important;display:block!important;opacity:1!important;filter:drop-shadow(0 18px 46px rgba(0,0,0,.36))!important}
+      html body .dw-spindle{z-index:5!important}
+    `;
+    document.head.appendChild(v34LoginMarkFix);
+
     const d=document.createElement('div');
     d.id='dwAuth';
     d.className='dw-auth signin';
-    d.innerHTML=`<div class="dw-turntable" role="dialog" aria-modal="true" aria-labelledby="dwAuthTitle"><div class="dw-deck" aria-hidden="true"><div class="dw-platter"><div class="dw-record"></div><svg class="dw-deadwax-etch" viewBox="0 0 600 600" aria-hidden="true"><defs><path id="dwLoginDeadwaxArc" d="M300,300 m-125,0 a125,125 0 1,1 250,0 a125,125 0 1,1 -250,0"/></defs><text font-family="Jost, sans-serif" font-size="10"><textPath href="#dwLoginDeadwaxArc" startOffset="0%">IN HONOR OF DAD · SO HIS COLLECTION MAY LIVE FOR GENERATIONS · </textPath></text></svg><div class="dw-label">${dwLogo()}</div><div class="dw-spindle"></div></div></div><div class="dw-tonearm" aria-hidden="true"><div class="dw-pivot"></div></div><section class="dw-auth-intro"><div class="dw-auth-intro-kicker">Your vinyl collection</div><h1 id="dwAuthTitle">Dead Wax</h1><p>Dead Wax is your private record cabinet: shelf IDs, collection labels, listening notes and Discogs details in one warm, searchable collection. Drop the needle to start playing.</p></section><section class="dw-auth-panel"><form class="dw-auth-card" id="dwAuthForm"><div class="dw-auth-kicker">Your vinyl collection</div><h1 class="dw-auth-title">Dead Wax</h1><p class="dw-auth-copy">Sign in to open your private record cabinet.</p><label for="dwEmail">Email</label><input id="dwEmail" type="email" autocomplete="email" required><label for="dwPassword">Password</label><input id="dwPassword" type="password" autocomplete="current-password" required><div class="dw-deck-controls"><button type="submit" class="dw-deck-btn signin" id="dwSignInBtn">Sign in</button><button type="button" class="dw-deck-btn signup" id="dwSignUp">Sign up</button></div><div class="dw-auth-error" id="dwAuthError"></div></form></section></div>`;
+    d.innerHTML=`<div class="dw-turntable" role="dialog" aria-modal="true" aria-labelledby="dwAuthTitle"><div class="dw-deck" aria-hidden="true"><div class="dw-platter"><div class="dw-record"></div><div class="dw-label">${dwLoginMark()}</div><div class="dw-spindle"></div></div></div><div class="dw-auth-side"><section class="dw-auth-intro"><div class="dw-auth-intro-kicker">Your private vinyl collection</div><h1 id="dwAuthTitle">Dead Wax</h1><p>Dead Wax is your private vinyl collection: shelf IDs, collection labels, listening notes, and Discogs details in one warm, searchable home.</p></section><section class="dw-auth-panel"><form class="dw-auth-card" id="dwAuthForm"><label for="dwEmail">Email</label><input id="dwEmail" type="email" autocomplete="email" required><label for="dwPassword">Password</label><input id="dwPassword" type="password" autocomplete="current-password" required><div class="dw-deck-controls"><button type="submit" class="dw-deck-btn signin" id="dwSignInBtn">Sign in</button><button type="button" class="dw-deck-btn signup" id="dwSignUp">Sign up</button></div><div class="dw-auth-error" id="dwAuthError"></div></form></section></div></div>`;
     document.body.appendChild(d);
     const setAuthMode=(mode)=>{ d.classList.toggle('signup',mode==='signup'); d.classList.toggle('signin',mode!=='signup'); };
     $('#dwSignInBtn').addEventListener('mouseenter',()=>setAuthMode('signin'));
